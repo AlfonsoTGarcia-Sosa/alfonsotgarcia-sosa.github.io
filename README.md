@@ -1,1 +1,0 @@
-# alfonsotgarcia-sosa.github.io
