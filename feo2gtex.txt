@@ -1,0 +1,782 @@
+
+\documentclass[12pt]{article}
+\usepackage{makeidx}
+%\usepackage{epsf}
+\usepackage{psfig}
+\makeindex
+
+\begin{document}
+
+\begin{titlepage}
+  \begin{center}
+
+
+\Large{ {\bf A Density Functional Study of FeO$_{2}$, FeO$_{2}^{+}$ and FeO$_{2}^{-}$ } }
+
+
+Alfonso T Garcia-Sosa and Miguel Castro
+
+
+\small{ {\em Departamento de Fisica y Quimica Teorica, Division de Estudios de Posgrado
+Facultad de Quimica, Universidad Nacional Autonoma de Mexico.}}
+
+
+\abstract{
+
+The lowest energy structures of FeO$_{2}$ were determined by means of
+density functional theory techniques as implemented in the program DGauss 
+3.0.1. 
+The calculations performed were of the all-electron type, using two levels 
+of theory, namely the local spin density approximation with the use of the 
+VWN functional, and the Generalised Gradient Approximation in the form of 
+the Becke 1988 exchange and Perdew 1986 correlation functionals.
+Results were visualised by means of the program UniChem 4.0.
+Bond distances and angles, as well as total energies were calculated for 
+several states of the moieties: Fe(O)$_{2}$, C$_{2v}$, Fe(O)$_{2}$, 
+D$_{\infty\,h}$,
+Fe($\eta^{2}$-O$_{2}$), C$_{2v}$, Fe($\eta^{1}$-O$_{2}$), C$_{s}$, 
+and Fe($\eta^{1}$-O$_{2}$), C$_{\infty\,v}$.
+Molecular orbital and harmonic vibrational analyses were carried out for 
+these species, in addition to Mulliken population analyses.
+Singly positive and negative charged species were also considered and 
+fully geometry optimized in a SCF gradient method.
+Accurate ionization potentials and electron affinities (both vertical and 
+ adiabatic determinations) were thus able to be computed.
+The results show the following for the ground state (GS)
+Fe(O)$_{2}$, C$_{2v}$, M= 3 : \angle OFeO= 138.1$^{o}$ (133.6$^{o}$)
+(Values in parenthesis are for LSDA-VWN, while the others are at the 
+GGA-B88/P86 level).
+R$_{e}$ Fe-O= 1.60 \AA (1.57 \AA ), ET= -1414.2064 au (-1,410.5047 au),
+EA$_{h}$= 2.47 (2.60) eV, IP$_{h}$= 10.6 (10.5) eV, EA$_{v}$= 2.41 (2.20) eV,
+IP$_{v}$= 10.67 (10.63) eV, EA$_{exp}$= 2.349 eV (in agreement with related 
+studies).
+In the GS the dioxygen molecule is found to be dissociated,
+compared to those states which have coordination modes where
+the O$_{2}$ molecule formally persists.
+A 3d4sp configuration for the iron atom is found to be especially relevant
+in Fe-O bond formation.
+The iron-oxygen and oxygen-oxygen bonds involved are characterized.
+A direct relationship is observed between these electronic and structural
+properties, influencing also the total energy for a given molecule.
+}
+
+\end{center}
+
+\end{titlepage}
+
+%******************************************************************************
+
+\section{Introduction}
+
+Molecular oxygen is involved in several reactions both of biological and 
+industrial importance, in which transition metals (TM), especially iron, 
+are essential. In these, TM act as catalysts and are also involved in the 
+activation, transport and storage of molecular species as O$_{2}$ and H$_{2}$.
+In particular, the understanding at a molecular level of such diverse 
+processes as O$_{2}$ carrying in biological systems or corrosion of 
+metals can be benefited from a deeper study of this type of metal-ligand 
+interactions.
+
+Theoretical studies exist on iron-oxygen systems,
+such as laser ablated iron atoms in an o\-xy\-gen/argon at\-mos\-phe\-re \cite{laserablated+DFT},
+pho\-to-oxi\-dat\-ion re\-ac\-tions of pentacarbonyl-iron 
+\cite{fotoxpentacarbonil},
+and in models of more complex systems such as iron-porphyrin and
+other Fe-O moieties \cite{Science}, \cite{DFTporf}.
+
+Previous work \cite{laserablated+DFT}, \cite{fotoxpentacarbonil}, \cite{semi}-\cite{Esp} 
+on iron-oxygen systems has revealed that the assignment of a ground state (GS) 
+for FeO$_{2}$ is strongly dependant on the level of theory used.
+The results presented in Table 1 illustrate the discrepancies that arise 
+between the descriptions of this small FeO$_{2}$ system as originated from 
+different theoretical approaches.
+
+As depicted in Table 1, it is only until recent years that the Fe-O$_{2}$
+systems have been studied {\em ab-initio} by means of all-electron 
+calculations performing both electronic and structural relaxations.
+Even at this high level of treatment the results show a dramatical dependence
+on the computational procedure employed.
+
+Semiempirical calculations offer an incorrect geometry for the calculated GS.
+Moving to the treatments of the all-electrons type,
+it is well known that the Hartree-Fock (HF) point of view alone is
+inadequate for an accurate description of systems containing TMs.
+For instance, HF does
+predict a correct structure, C$_{2v}$, for the FeO$_{2}$ GS \cite{FeO2HF};
+however, the multiplicity observed (M=7) seems to be too high  to allow the
+spin pairing process or chemical bond formation.
+When correlation effects are taken into account, such as
+in \cite{laserablated+DFT}, \cite{fotoxpentacarbonil}, \cite{Esp},
+the description of the bonding in the GS molecule predicts
+more consistent results for the geometry. 
+Nevertheless, there is some
+controversy on the electronic state of the GS of the FeO$_{2}$ system.
+
+Despite the available ab initio studies including correlation
+effects \cite{laserablated+DFT}, \cite{fotoxpentacarbonil}, \cite{Esp},
+a systematic theoretical study is needed at a high level of theory
+which includes full structural and electronic optimization
+of the systems referred to and description of the bonds therein.
+
+Open shell transition metal systems present a challenge for the 
+state-of-the-art computational methods and theories.
+In this regard, density functional theory (DFT), provided the use
+of suitable gradient corrected functionals that accurately describe the
+exchange-correlation interactions, has given examples \cite{DFTinChem} of 
+being one of the most reliable tools for their study.
+This is seen both from a computational procedure simplicity, and a formal 
+ theory point of view.
+The use of a generalized gradient approximation (GGA), such as that
+proposed by Becke   for
+exchange \cite{B} and Perdew for correlation \cite{P}, is
+appropriate for this type of TM-L systems.
+
+The present work deals with a systematic theoretical study on the  FeO$_{2}$ 
+system.
+Our treatment was done using DFT techniques ({\em vide infra}), and we believe
+ that our research might help to elucidate some structural and electronic 
+aspects of this molecule. 
+The study involves the calculation of the structural parameters for the lowest
+energy states of several FeO$_{2}$ coordination modes.
+Furthermore, vibrational, molecular orbital, Mulliken population and charge
+transfer analyses were carried out on these states in order to afford insight
+on the nature of the chemical bond in these species.
+
+
+%******************************************************************************
+
+\section{Methodology}
+
+First-principles, all-electron calculations were per\-for\-med with the
+co\-de DGauss 3.0.1 \cite{DGauss},  which is a
+ {\em Linear Combination of Gaussian-type Orbitals} DFT-based method 
+(LCGTO-DF). 
+DZVP2 orbital basis sets were used,
+ namely (63321/5211*/41+) for Fe and  (721/51/1) for O.
+Additionally, TZV-A1 
+(10/5/5) au\-xi\-lia\-ry basis sets were used for the fitting 
+of the density and the XC contributions to the total energy and energy 
+gradients.
+
+
+The procedure involved full geo\-me\-try op\-ti\-mi\-za\-tion by a SCF 
+e\-ner\-gy gra\-dient  me\-thod of can\-di\-da\-te structures (shown 
+in Figure 1) in different quantum states, firstly at the Local 
+Spin-Density Approximation (LSDA) by using the Vosko, Wilk, Nusair 
+(VWN, \cite{VWN}) functional.
+The convergence criteria used were tight, {\em i.e.} $\Delta$E=1x10$^{-7}$ au
+for the total energy, $\Delta\rho$=1x10$^{-5}$ au for the density, and
+$\Delta$E/$\Delta$r = 5x10$^{-5}$ au for geometry optimizations.
+A fine grid of 194 angular points per atom was employed for the
+numerical integration and second derivative evaluation.
+Harmonic vibrational, molecular orbital, Mulliken population and
+charge transfer analyses were then performed on the located
+lowest energy states for each coordination mode.
+In a second step, these structures were then fully reoptimised
+at the GGA level, by use of the Becke 1988 exchange \cite{B}, and Perdew 1986
+correlation \cite{P} functionals.
+This XC scheme will be referred to as B88/P86.
+The same tight convergence criteria and fine numerical grid were used,
+and harmonic vibrational, molecular orbital, Mulliken population and
+charge transfer analyses performed as in the former case.
+The same expensive and thorough treatment was given to singly charged 
+negative and positive states derived from the ground state.
+
+Calculations were done with a Cray YMP4/464 supercomputer.
+
+Five possible coordination modes for the dioxygen molecule with an
+iron atom were considered.
+These are shown  in Figure 1.
+We have special attention paid to the location, in the potential energy
+surface of Fe-O$_{2}$, of that structure that shows a similar
+coordination mode and symmetry, Fe($\eta^{1}$-O$_{2}$), C$_{s}$, as that
+found  in oxyhemoglobin.
+
+Visualizations of structures, molecular orbitals, and harmonic vibrational
+modes were produced in the UniChem 4.0 package \cite{unichem}. Harmonic 
+vibrational frequencies were obtained through the square roots of the 
+eigenvalues (divided by the reduced mass) of the second derivative matrix
+ of the potential energy landscape (harmonic oscillator force constant matrix).
+
+%******************************************************************************
+
+
+\section{Results and Discussion}
+
+The VWN and B88/P86 functionals yield the total energies for the states
+ordered in Table 2 with values in hartrees.
+
+Figure 2 shows the lowest energy state for each coordination mode 
+considered at the LSDA level.
+Relative total energies between these states are also included,
+as well as structural parameters for each state.
+
+Figure 3 shows the results for the lowest energy state for each coordination
+mode, as well as structural parameters and relative energies calculated 
+at the GGA level.
+The differences in O-O distances from the coordinated O$_{2}$ species and
+free O$_{2}$ are shown in Figure 2 and Figure 3.
+
+The ordering of states is essentially the same for both levels of theory.
+GGA produces slightly larger bond distances than LSDA.
+This is accounted for by the correction that the B88/P86 functional makes of
+the overestimation of bonding produced by the LSDA approach.
+
+Another observation is that a pattern is found between total energy and both
+O-O and  Fe-O bond distances.
+The lower the total energy for a given state, the larger the O-O distance
+and the shorter the Fe-O one.
+This implies a lowering of total energy for a state with increasing
+dissociation of the O-O bond and increasing formation of the Fe-O bond.
+
+The bond orders calculated, presented in Table 3, show a similar picture as 
+that observed in the structural parameters.
+The limit case is that of the lowest total energy structure or GS,
+which presents the strongest Fe-O bond order of 0.99 (1.06) at the GGA (LSDA)
+level of theory;
+and the weakest O-O bond order, of  the set of states.
+
+In the GS,  {\bf Ia}, there is effectively no O-O bond left, with respect
+to free O$_{2}$.
+In contrast, state {\bf IIIa} presents a lesser activation of O$_{2}$ as the
+difference between bond orders of the free species and the coordinated one is
+of a unit (there is still molecularity of dioxygen present in state 
+{\bf IIIa}).
+Another proof of evidence is provided by the charge transfer in these species
+(see Table 4) as there exists a direct relationship between increasing
+Fe$\rightarrow$O charge transfer and lower total energy, at both levels
+ of theory used, with the limit case being the GS, {\bf Ia}, with a net
+ charge transfer of 0.831 (0.756) of a unit.
+
+Table 5 shows the progressive increase in 4p participation to the global Fe
+configuration in a given state with decreasing total energy for that state.
+
+The results obtained from the harmonic vibrational analyses performed on the
+black species in Table 2 are shown in Table 6.
+
+
+%-----------------------------------------------------------------------------
+
+\subsection{Ground State, {\bf Ia}}
+
+Our computed GS for Fe(O)$_{2}$, has a triangular structure  
+  of C$_{2v}$ symmetry and  M=3. 
+In this state, the binding between the O  atoms 
+is neglegible, while the bond order analysis indicates the 
+appearance of a single bond between Fe and each O.  
+These bonds have equilibrium bond lengths of 1.60 \AA\, and 
+the O-Fe-O angle formed is of 138.1 $^{o}$, at the GGA 
+level of theory. 
+This picture is in agreement with the results obtained 
+by Andrews {\em et al}, which have used the B3LYP hybrid 
+functional \cite{laserablated+DFT}. 
+They also obtain a C$_{2v}$ structure, with M=3, 
+for the GS of FeO$_{2}$. 
+Their results for the Fe-O bond lengths and O-Fe-O 
+angle are very similar to our computed values. 
+
+Table 7 compares structural parameters for several proposed 
+GSs of Fe(O)$_{2}$, in a C$_{2v}$ symmetry, as reported 
+in the literature and those 
+obtained through the present study.
+
+Our DFT results are in disagreement with those 
+obtained by means of Hartree-Fock calculations where the 
+correlation effects were included through  
+configuration interaction (CI) techniques \cite{Esp}.
+The CI treatment indicates that the GS of Fe-O$_{2}$ 
+is a closed shell state, M=1, in  
+C$_{2v}$ symmetry, with Fe-O bond lengths of 1.50 \AA\,
+and an O-Fe-O angle of 169.8 $^{o}$. 
+That is, the CI GS of Fe-O$_{2}$
+is closer to a linear structure than the DFT one. 
+Looking at the bond lengths and bond angles, 
+the CI results overestimate, with respect to DFT, 
+the bonding in the O-Fe-O molecule. 
+Indeed, the CI M=1 
+state implies a major chemical bond formation 
+(pairing of electrons) than the DFT M=3 state. 
+However, our calculations reveal that the singlet state
+is located 0.73 eV above our computed M=3 GS. 
+
+It is interesting to observe that the quintet state is located 
+only +0.30 eV above the GS, at the B88/P86 level of theory. 
+A similar picture was obtained 
+by Andrews {\em et al}.
+Their results indicate that the 
+triplet and quintet states are almost degenerate, since the 
+quintet is located only 0.1 eV above the triplet,
+using the Becke-Perdew functional \cite{laserablated+DFT}. 
+However, the use of the hybrid B3LYP functional gives a 
+reverse order: the quintet is the GS, with the triplet 
+lying +0.1 eV above the quintet \cite{laserablated+DFT}. 
+As pointed out by
+Andrews {\em et al}, the quintet state is not compatible with 
+the experiment \cite{exp}, since the calculated O-Fe-O angle 
+(of 142 $^{o}$) obtained for the triplet is more consistent
+with the experiment than the O-Fe-O angle for the quintuplet 
+(equal to 118 $^{o}$). 
+Hence, the Becke-Perdew picture, 
+of Andrews {\em et al} and ours, indicate that the GS of O-Fe-O
+is more likely to be a triplet state. 
+
+These studies reveal that  the 
+results obtained 
+on systems that contain TM atoms are very sensitive to
+the level of theory used for XC effects. 
+A similar conclusion has
+been reached before \cite{jam}
+in our studies of small TM clusters. 
+In this particular O-Fe-O case, it seems that the 
+Becke-Perdew scheme works much better than the
+B3LYP one. 
+This is a surprising result, since the B3LYP functional
+has proven to yield results of chemical accuracy 
+in benchmark calculations, eventhough these calculations
+involve systems
+that do not contain TM atoms. 
+This means that more accurate
+functionals need to be developed for a better description
+of TM systems and consequently, of the XC effects which arise
+in them. 
+
+There are experimental observations \cite{exp} that suggest 
+a triplet GS for Fe(O)$_{2}$, instead of a singlet or a quintet. 
+As mentioned above, Andrews {\em et al} found that the O-Fe-O angle 
+for the GS
+had a defined range of values in which only the triplet species fit.
+Furthermore, the observed  isotopic 16/18 frequency ratios 
+for the antisymmetric and symmetric modes of the triplet state 
+\cite{laserablated+DFT}, show an excellent agreement with the theoretical
+values using both Becke-Perdew and B3LYP schemes. 
+On the other hand, their calculated values for the quintet for both 
+functionals, were termed incompatible with the experimental ratios.
+Despite this, the authors point out that since both states are close in 
+energy, more experimental studies are needed to corroborate or deny that 
+the triplet is the true GS.
+In comparison, the mentioned MP2/CCSD(T)  \cite{Esp}  results 
+show a poor match with the experimental picture cited above.
+
+Of all the Fe(O)$_{2}$ set of candidates, 
+the found GS, {\bf Ia}, has the strongest Fe-O bond and the weakest 
+(negligible) O-O bond. 
+This state  also shows the greatest Fe$\rightarrow$O charge 
+transfer, which accounts for its high stability or lowest energy. 
+Moreover, the Mulliken population analysis reveals that the electronic 
+pattern of the Fe atom  is of 3d4s4p type. In paricular, the GS has 
+the most important 4p participation.  
+
+In effect, state {\bf Ia} : Fe(O)$_{2}$, C$_{2v}$, M=3, has considerably lost 
+the molecularity of O$_{2}$.
+This can be seen in the frontier molecular orbitals (MO) depicted in 
+Figure 4 as well as in the vibrational modes illustrated in Figure 5 which 
+correspond to an angular inserted dioxide species.
+
+As is observed in comparison to other states, a pattern is established 
+between lower total energy for a given state and its increasing Fe-O bond 
+formation and Fe$\rightarrow$O charge transfer. 
+Alongside, this lowering of total energy is coupled to  
+a decrease of the O-O bonding and to a 
+greater 4p and 4s participation in the characteristic overall 
+3d4sp configuration for the iron atom in a given state.
+
+Mulliken population analysis on the valence MOs for the GS 
+shows that the principal contributions to the bonds are of a 3d4sp(Fe)-2p(O)
+nature.
+For instance, the HOMO is of a bonding nature and 
+contains 27\% of its electronic density on
+the 4s orbital of Fe, 15\% on orbital 3d$_{y^{2}}$, 7.6\% on orbital
+3d$_{x^{2}}$, 5\% on orbital 3d$_{z^{2}}$, 5\% on orbital 3p$_{y}$, 
+and 1.8\% on orbital 3d$_{xy}$ of the same atom.
+The resting 40\% of the electronic charge is shared evenly between each 
+oxygen in orbitals 2p$_{x}$ and 2p$_{y}$.
+On the other hand, the LUMO is antibonding and is composed of 43.3\% of 
+electronic density on orbital 3d$_{xz}$ of iron, and 28\% on orbital 
+2p$_{z}$ of each oxygen. 
+The 3d4sp (of Fe) and 2p (of O) contributions to the bonding
+are noticeable in the drawings of the HOMO and LUMO, displayed in Fig. 4.
+
+The population analysis reveals that the GS has 
+a magnetic moment located  mainly on the Fe atom. 
+This moment corresponds to the two 3d electrons 
+that were not involved in the bond forming process. 
+
+The vibrational pattern for the GS of FeO$_{2}$ is characteristic of a 
+C$_{2v}$ structure and is illustrated in Figure 5.
+
+In a similar fashion to Table 7, Table 8 compares vibrational frequencies 
+for several Fe(O)$_{2}$, C$_{2v}$ GSs.
+The present work yields harmonic vibrational analysis results in
+the same order of magnitude and compare well to 
+those of Andrews {\em et al} \cite{laserablated+DFT}
+calculated using the B3LYP functional and 
+those observed experimentally \cite{laserablated+DFT}; 
+and with calculations of MP2, CCSD(T)-TZV quality \cite{Esp} cited in 
+Table 8. 
+The frequencies were assigned to the bands produced by FeO$_{2}$ species 
+present in the laser ablation of iron atoms in an oxygen atmosphere. 
+The assignment fits with a C$_{2v}$ structure where
+there is no longer a significant O-O bond. 
+
+A series of singly, positive and negative, charged states 
+(derived from the GS) were also searched, 
+both with and without structural relaxation, that is, through 
+full SCF geometry optimizations  and single point SCF calculations, 
+respectively.
+This made possible the determination of precise and accurate ionization
+potentials (IP) and electron affinities (EA), which may be connected 
+with the corresponding experimental \cite{exp} determinations of these 
+properties.
+
+Vertical (single point calculations, allowing no structural 
+relaxation of the system) and 
+horizontal (adiabatic, involving geometry optimization, 
+{\em i.e.}, structural relaxation of the system) determinations
+of IPs and EAs are 
+presented in Table 9, which has values in eV.
+
+There is a very small change in structural parameters from the neutral species
+to the charged ones (in the horizontal determinations).
+The GSs for both the negative (FeO$_{2}^{-}$) and the positive 
+(FeO$_{2}^{+}$) species had the same
+geometry (inserted angular dioxide) and symmetry (C$_{2v}$) as the neutral GS.
+Both negative and positive GS resulted doublets, M=2, one resulting from 
+the addition and the other from the substraction, respectively, of an electron
+ from the neutral, M=3, GS.
+
+If we compare the calculated vertical EA,  at the GGA level, 
+of 2.410 eV with the experimental value of 2.358 eV \cite{exp}, we find a 
+small difference of 2.2\%.
+This result encourages the use of a B88/P86 scheme for the study of physical 
+and physicochemical properties of systems that require an accurate 
+description, such as those in which TMs are present.
+
+
+%----------------------------------------------------------------------------
+
+\subsection{State {\bf IIa}}
+
+As mentioned, we have also located some higher energy
+states of the neutral FeO$_{2}$ molecule. 
+In what follows
+we will discuss shortly these findings in systems which can be of
+relevance in processses in which they are encountered. 
+
+State {\bf IIa} has structural parameters and energy values very close to
+those present in the GS.
+Nevertheless, this linear dioxo species has peculiarities such as two 
+degenerate negative vibrational frequencies at both levels of theory used.
+This indicates that such species is not at a true minimum of energy, even
+though it lies closely in energy (0.16 eV at the B88/P86 level) to the GS. 
+
+This result confirms state {\bf Ia} as the true GS, 
+and extends the knowledge of this system from that obtained in
+other studies such as \cite{fotoxpentacarbonil}, where similar 
+structures as {\bf Ia} and {\bf IIa} 
+were proposed as possible GSs.  
+
+%----------------------------------------------------------------------------
+\subsection{State {\bf IIIa}}
+
+This triangular species contains the molecular dioxygen unit, 
+which is reflected in its calculated HOMO and LUMO orbitals (Figure 6) and
+its vibrational modes (Figure 7).      
+
+In IIIa, the perturbation of the O-O bond, though strong,
+is not enough for dissociative
+activation as occurs in the GS.
+The IIIa state lies considerably higher in energy,
+2.33 eV (at the B88/P86 level of theory) above the GS.
+Such high location is consistent with
+the longer Fe-O bond length and smaller Fe-O bond order
+as compared to those found in the GS.
+
+Eventhough both the HOMO and LUMO (shown in Fig. 6) 
+are antibonding, they both show
+fragments of molecular O$_{2}$ units; $\pi^{*}_{g}$ in the former, and
+$\pi_{g}$ in the latter.
+The HOMO is composed of 30.3\% of the electronic density on the d$_{xy}$ iron
+orbital, in addition to 34.8\% of this density on each oxygen p$_{y}$ orbital.
+In contrast, the LUMO has 64.5\% of density on the 4s orbital, 27.8\% on
+orbital 4p$_{z}$, and 5.6\% on orbital d$_{z^{2}}$.
+Each oxygen atom takes 2.6\% of the total electron density of the LUMO orbital
+on orbitals 2p$_{z}$.
+Overall, these MO's show how the 3d4sp contributions of the Fe atom
+are involved in the bonding with the $\pi$ component of the oxygen atoms.
+
+Besides having a higher total energy than the GS, the species
+{\bf IIIa} has less charge transfer (which resides in back donation from iron d
+ orbitals to oxygen  molecular orbitals), and less 4p participation in the iron
+ configuration than in state {\bf Ia}.
+
+The values framed in Figure 7 represent the mode which is possible to identify
+with the dioxygen molecule vibration.
+The frequency displacement from the value in the free O$_{2}$ molecule is
+presented, displaying an activation for this subunit in the molecule where the
+dioxygen molecule is trapped by an iron atom.
+This activation is evidenced in the lower frequency, larger O-O bond distance,
+and smaller bond order for the O-O bond in {\bf IIIa} than in the free O$_{2}$
+molecule.
+
+
+The observed frequencies \cite{laserablated+DFT} of this Fe(O$_{2}$), 
+C$_{2v}$, state may be assigned to our calculated values.  
+The strongest observed band for this state, 956 cm$^{-1}$, as well as a 
+weaker band, 548.4 cm$^{-1}$, are reasonably close to our estimations, 
+915.5 and 615.8 cm$^{-1}$, respectively. 
+This agreement suggests that the triplet state is the one
+of lowest energy for this Fe(O$_{2}$) coordination mode. 
+A similar assignment was done by Andrews {\em et al}, but instead of a 
+triplet, they found that the quintet state, eventhough it is a high 
+energy state, fits better than the triplet. 
+Indeed, in the 
+calculations of Andrews {\em et al}, the septet is the lowest energy state, 
+followed by the quintet and triplet states. 
+As pointed out by the 
+authors \cite{laserablated+DFT}, the B3LYP scheme is biased toward high
+spin states. 
+This picture exemplifies that the descriptions 
+of TM-L systems depend sensitively on the chosen functional.
+Our results show the consistency of the B88/P86 XC scheme,
+as implemented in the DGauss program, 
+both in the determination of the lowest energy states and in the
+vibrational assignments. 
+
+The so called energy of dissociation is the difference in energy between the
+lowest energy state containing the bound molecular O$_{2}$ species and the
+GS  where this molecularity no longer exists.
+For the present work, this difference occurs from state {\bf IIIa} to state
+{\bf Ia} and amounts to 2.27 eV (52.35 kcal/mol) at the LSDA-VWN level, or
+2.33 eV (53.79 kcal/mol) at the GGA-B88/P86; which are roughly the half of
+that reported in the MINDO study \cite{semi}.
+This result suggests that the dissociation of a molecule of O$_{2}$ by a
+single iron atom is a less unlikely process as predicted by the MINDO
+study \cite{semi}.
+Experimentally, it has been shown that for this process to happen, a
+sufficiently excited iron atom has to be present to successfully react
+with a dioxygen molecule \cite{chemrev}.
+
+%The vibrational modes calculated for this species can be seen in Figure 7.
+%These vibration modes have been assigned in experimental studies as in
+%\cite{laserablated+DFT}.
+
+%%%AQUI VAMOs, hecahrle un ojo al pararfo antrior
+
+%----------------------------------------------------------------------------
+\subsection{State {\bf IVa}}
+
+The coordination mode and symmetry of the state {\bf IVa} are very 
+similar to those that occur in oxyhemoglobin,
+in which the chemical environment of the protein's active centres is provided
+by the heme groups,  which are  embedded and bonded to its globin structures.
+
+%State {\bf IVa} preserved its geometry up to the tight convergence criteria at
+%the LSDA level, but only up to a medium geometry convergence criteria
+%($\Delta$E = 5 x 10$^{-7}$ au, $\Delta\rho$= 5 x 10$^{-5}$ au) at the GGA 
+%level.
+
+A single point B88/P86 calculation 
+(with tight energy and density convergence criteria)
+reveals that {\bf IVa} has a negative
+vibrational frequency at {\mbox -22.8 cm$^{-1}$}, while the positive 
+frequencies are 565.8 and 1113.4 cm$^{-1}$.  
+This result differs from that of Andrews {\em et al}, who have found
+that {\bf IVa} is a true minimum since it has three positive frquencies:
+134.7, 472.7, and 1159.8 cm$^{-1}$. Using a lower level of theory, as in
+the LSDA approach, we have also found that {\bf IVa} has three positive
+frequencies: 159.4, 607.3, and 1267.3 cm-1. Note that in this last
+case, the smallest value is very close to that of Andrews {\em et al} 
+Then, our higher level of theory calculation 
+indicates that {\bf IVa} is a transition state (TS). 
+
+The TS nature of {\bf IVa} is reflected by the fact that a 
+geometry optimization (at the GGA level with a tight convergence criteria) 
+led to a structure with coordination
+mode and symmetry Fe($\eta^{2}$-O$_{2}$), C$_{2v}$ (by closure of the FeOO
+angle), which eventually fell to the lower energy {\bf IIIa} state.
+
+The vibrational analyses for {\bf IVa} produces the results depicted in 
+Figure 9.
+The mode which is highlighted presents the activation of the O-O bond, which 
+is of less extent than that present in state {\bf IIIa}.
+The vibrational mode possesing a negative frequency can also be seen in
+Figure 9.
+As shown above, 
+the present work predicts an angular inserted dioxide species as the GS
+for the Fe(O)$_{2}$ system, 2.87 eV (at the B88/P86 level) lower than
+state {\bf IVa}.
+Specific conditions in the hemoglobin environment render a special stability
+ to the {\bf IVa} moiety.
+
+
+%This behaviour, in addition to the difficulty of achieving convergence of the
+%calculation for this state, indicates that the state is in a very irregular
+%well of potential energy, and that the forces acting on the closure of the
+%FeOO angle are complex.
+%Therefore, a stabilization of this mode of coordination is hard to attain.
+
+%%This state at a medium geometry convergence criteria at the B88/P86 level 
+%%presents a scenario similar to that in state {\bf IIIa}.
+%%Activation of the oxygen-oxygen bond is less in this state than in the lower
+%%lying state {\bf IIIa}, which can be seen in a smaller bond distance, greater
+%%bond order and weaker vibrational frequency for the O-O bond in {\bf IVa}.
+%%State {\bf IIIa} presents a case in which there is greater Fe d orbitals
+%%$\rightarrow$ O $\pi^{*}$ molecular orbitals charge transfer (that in turn
+%%debilitates the O-O bond) than in {\bf IVa}; hence, there is a greater 
+%%activation of such bond in the former case.
+
+The HOMO for {\bf IVa} is bonding, whilst the LUMO is antibonding.
+In HOMO, see Fig. 8, the O$_{2}$ molecular fragment interacts through its 
+$\pi$ antibonding
+orbitals with the 3d orbitals of the Fe atom. In this bonding 
+interaction also it is recognized a considerable 
+d$\rightarrow \pi^{*}_{g}$ charge transfer. 
+
+%Once again, the  molecular fragment of O$_{2}$ is visible in the
+%bonding behaviour of HOMO, see Figure 8, which also reveals the d$\rightarrow \pi^{*}_{g}$
+%charge transfer.
+
+%-----------------------------------------------------------------------------
+
+
+\subsection{State {\bf Va}}
+
+This linear high multiplicity molecule owes its total spin number of six to 
+the absence of pairing between the two free electrons on O$_{2}$ and four 
+free electrons on iron.
+This mode of coordination, therefore, does not have important interactions
+between dioxygen and iron, and consequentially, lies high in energy with 
+respect to states corresponding to other modes.
+
+
+%-----------------------------------------------------------------------------
+\section{Conclusions}
+
+A correct ordering by total energy of the different states and coordination
+modes of the FeO$_{2}$ series was constructed.
+
+The Fe(O)$_{2}$, C$_{2v}$, M=3 GS  {\bf Ia} predicted by the present
+work is in agreement with experimental and theoretical evidence \cite{exp} 
+\cite{laserablated+DFT}, as is another work previously published 
+elsewhere \cite{laserablated+DFT}.
+Our analysis of Fe(O)$_{2}$ illustrates that a proper 
+treatment of the XC effects 
+is critical to the accurate description of the structural and electronic 
+properties of transition metal systems such as Fe-O$_{2}$.
+
+There is a clear pattern found between lower energy for a given state and the 
+increased formation of Fe-O bonds, increased activation of the oxygen-oxygen 
+bond, increased charge transfer of an Fe$\rightarrow$O type, and electronic 
+configurations 3d4sp with increasing participation of 4s and 4p electronic 
+charge on iron. 
+
+Charge transfer in the form of back donation from iron d orbitals to oxygen
+$\pi$ antibonding molecular orbitals generates the diminishing of the O-O bond.
+
+The participation of 4p orbitals in the iron configuration provides
+polarization for the metal atom which allows it to form strong bonds with each
+oxygen atom.
+Participation of 4s orbitals affords delocalization of electronic charge, 
+which in turn, also favours the Fe-O bonding.
+
+The calculated GS {\bf Ia} can be seen as the last stage in a process of
+nearing the O$_{2}$ molecule to an iron atom.
+This O$_{2}$ to Fe approach may be seen to lead to lowering the total energy for the 
+system. 
+While the O$_{2}$ molecule transversally approaches the iron atom, lowering 
+the total energy for a given state due to the formation of Fe-O bonds, there 
+is a progressive breaking of the O-O bond coupled to a build up 
+of the Fe-O bonding.
+This process eventually carries to the dissociative adsorption of the dioxygen 
+molecule by a sufficiently excited Fe atom, which is the case of the most 
+stable moiety, the GS. 
+Indeed, the electronic pattern of the Fe atom, in the
+GS of FeO$_{2}$, is of 3d$^{7}$4s$^{1}$4p$^{x}$ nature, which differs from 
+the 3d$^{6}$4s${2}$ GS configuration
+of the free Fe atom. 
+
+Triangular structures such as {\bf IIIa} lie higher in energy than the 
+angular inserted dioxo species such as {\bf Ia}.
+%The linear inserted dioxo species, however, lands on an unstable region of the 
+%potential energy hipersurface, and hence tends to move its O-Fe-O angle back
+%to the angular variety of the GS.
+
+An Fe($\eta^{1}$-O$_{2}$), C$_{s}$ moiety can be present in systems such as
+oxyhemoglobin, probably due to the steric and electronic factors affecting
+the central iron atom which prevent the formation of iron-dioxo bonds (such
+as those present in the GS {\bf Ia}) which are lower in energy
+than angular Fe-(O$_{2}$) structures of the type of {\bf IVa}.
+Besides securing stabilization of the $\eta^{1}$-O$_{2}$, C$_{s}$ moiety,
+these steric and electronic factors might be responsible for the reversibility
+ of the Fe-O union, compulsory for the dioxygen transport process, as this
+$\eta^{1}$-O$_{2}$, C$_{s}$ moiety is in an irregular well of potential energy.
+
+The value of 2.2\% in error between the calculated figure and the experimental
+one for electron affinity \cite{exp}, validates this study and affords it as
+ a useful method to study other systems of the same kind with more metallic 
+ atoms and other substrate molecules such as H$_{2}$, N$_{2}$, NH$_{3}$, 
+NO, etc.
+%----------------------------------------------------------------------------
+
+{\bf Acknowledgements}
+
+Financial support from DGAPA-UNAM under project 
+PAPIIT IN-101295, and supercomputing resources from DGSCA (UNAM) are
+ greatly acknowledged. 
+ATGS would like to thank Programa 127 "Formacion Basica en la Investigacion" 
+for a scholarship. 
+%-----------------------------------------------------------------------------
+
+\begin{thebibliography}{99}
+
+
+\bibitem{laserablated+DFT}  Andrews, L. , Chertihin, G.V., Ricca, A., and
+Bauschlicher, C. W., Jr., {\em J. Am. Chem. Soc.}, 1996, {\bf 118}, 467-470.
+
+\bibitem{fotoxpentacarbonil}  Lyne, Paul D., Mingos, D. Michael, Ziegler, T.,
+and Downs, A.J., {\em Inorg. Chem.}, 1993, {\bf 32}, 4785 4796.
+
+\bibitem{Science}  Que Jr, L., Shu, Nesheim, Kauffman, Munck and Lipscomb,
+{\em Science}, {\bf 275}, 515-518, 1997.
+
+\bibitem{DFTporf}   Rovira, C., Ballone, P., and Parrinello, M., {\em Chem.
+Phys. Lett.}, 1997, {\bf 271}, 247-250.
+
+\bibitem{semi} Blyholder, G., Head, J., and Ruette, F., {\em Inorg. Chem.},
+1982,  {\bf 21}, 1539-1545.
+
+\bibitem{FeO2HF} Helmer, J.M.C., Plane, J., {\em J. Chem. Soc. Faraday Trans.},
+ 1994, {\bf 90}, 395.
+
+\bibitem{Esp} Sol\`{a}, M., Duran, M., Cao, Z., {\em Chem. Phys. Lett.}, 1997,
+{\bf 274}, 411-421.
+
+\bibitem{DFTinChem}   Salahub, D.R., Castro, Fournier, R., Mlynarski, P.,
+Papai, I., St-Amant, A., and Ushio, J., in {\em Density Functional Methods in
+Chemistry}, Labanowski, J., and Andzelm, J., Springer, Nueva York, 1991.
+
+\bibitem{VWN}   Vosko, S.H., Wilk,L., and Nusair, M., {\em Can. J. Phys.}, 1980,{\bf 58}, 1200.
+
+\bibitem{B}  Becke, A.D., {\em Phys. Rev. A}, 1988, {\bf 38}, 3098.
+
+\bibitem{P}   Perdew, J.P., {\em Phys. Rev.}, 1986, 8822; {\em Phys. Rev. B},
+ 1991, 7406E.
+
+\bibitem{DGauss} Andzelm, J., {\em Ab Initio} Me\-thods in Quan\-tum
+Che\-mis\-try, Springer/Verlag, New York, 1991.
+
+\bibitem{jam} Jamorski, C., Martinez, A., Castro, M., and Salahub, D. R.,
+{\em Phys. Rev. B}, 1997, {\bf 55}, 10905.
+
+\bibitem{exp} Fan, J., Wang, L.S., {\em J. Chem. Phys.}, 1995, {\bf 102}, 8714.
+
+\bibitem{chemrev} Bytheway, I., Hall, M.B., {\em Chemical Reviews}, 1994, {\bf 94}, 639-658.
+
+\bibitem{unichem} UniChem 4.0, Oxford Molecular, 1996.
+
+\end{thebibliography}
+
+\end{document}
+
+
+

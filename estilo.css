@@ -1,0 +1,53 @@
+
+h1, h2 {
+       font-family: Garamond;
+       }
+
+h2 { 
+   /*
+   border-bottom: 1px solid black;
+   */
+   }
+
+h3 {
+   /*
+   border-bottom: 1px solid black;
+   */
+   }
+
+
+em {
+   font-style: italic;
+   }
+
+
+p.research {
+
+      text-align: left;
+
+      }
+
+#body {
+#  font-size: 20px;
+#}
+
+#.small {
+#  font-size: 15px; /* 75% of the baseline */
+#}
+
+#.large {
+#  font-size: 25px; /* 125% of the baseline */
+#}
+
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+div.fullWidth {
+  width: 100%;
+}
+
+

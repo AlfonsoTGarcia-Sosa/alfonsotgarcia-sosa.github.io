@@ -1,0 +1,39 @@
+10339  grep -A5 LogP PubChemAnnotations_source\=DrugBankLogP.xml |grep Number > rawLogPexp_fromPubChem.txt
+10355  grep -A5 LogS PubChemAnnotations_source\=DrugBankLogS.xml |grep Number > rawLogSexp_fromPubChem.txt 
+10359  grep -A5 LogS PubChemAnnotations_source\=DrugBankLogS.xml |more
+10360  grep Number PubChemAnnotations_source\=DrugBankLogS.xml |more
+10361  grep Number PubChemAnnotations_source\=DrugBankLogS.xml |wc
+10362  grep -A5 LogS PubChemAnnotations_source\=DrugBankLogS.xml |grep Number |wc
+10363  grep -A5 pKa PubChemAnnotations_source\=DrugBank_pKa.xml |grep Number |wc
+10364  grep -A5 pKa PubChemAnnotations_source\=DrugBank_pKa.xml |grep Number |more
+10365  grep -A5 pKa PubChemAnnotations_source\=DrugBank_pKa.xml |grep Number > raw_pKaexp_fromPubChem.txt 
+10368  grep -A5 Solubility PubChemAnnotations_source\=DrugBankSolubility.xml |grep Number > raw_Solubexp_fromPubChem.txt 
+10309  grep -A1 ALOGPS_LOGP structures.sdf | grep -v LOG | grep -v "\-\-" > rawALOGPpred_fromDBstucturespdf.txt
+10310  grep -A1 JCHEM_LOGP structures.sdf | grep -v LOG | grep -v "\-\-" > rawJCHEMLOGPpred_fromDBstucturespdf.txt
+10311  grep -A1 ALOGPS_LOGS structures.sdf | grep -v LOG | grep -v "\-\-" > rawALOGSpred_fromDBstucturespdf.txt
+10312  grep -A1 JCHEM_PKA structures.sdf | grep -v JCHEM | grep -v "\-\-" > rawJCHEMPKApred_fromDBstucturespdf.txt
+10331  grep -A1 ALOGPS_SOLUBILITY structures.sdf | grep -v ALOGPS | grep -v "\-\-" > rawALOGPS_Solub_pred_fromDBstucturespdf.txt
+10332  more rawALOGPS_Solub_pred_fromDBstucturespdf.txt 
+10333  cp rawALOGPS_Solub_pred_fromDBstucturespdf.txt rawALOGPS_Solub_pred_fromDBstucturespdf2.txt
+10334  vim rawALOGPS_Solub_pred_fromDBstucturespdf2.txt
+cp raw_pKaexp_fromPubChem.txt raw_pKaexp_fromPubChem2.txt
+al@al:~/tart/Benfordslaw/results$ grep -A1 "Experimental logP" /home/al/tart/ligs/NCI/ncidb.sdf | grep -v logP |grep -v "\-\-" > rawLogPexp_fromNCI.txt
+al@al:~/tart/Benfordslaw/results$ grep -A1 "Experimental logP" /home/al/tart/ligs/NCI/ncidb.sdf | grep -v logP |grep -v "\-\-"| wc
+   3576    3576   18506
+al@al:~/tart/Benfordslaw/results$ grep -A1 "Experimental logP" /home/al/tart/ligs/NCI/ncidb.sdf | grep -v logP |grep -v "\-\-" > rawLogPexp_fromNCI.txt
+
+in vim:  :%s,<Number>,,g
+         :%s,</Number>,,g
+
+Then =LEFT(ABS(cellA,a))
+and =COUNTIF(cell<2,1,0) in excel
+
+
+
+
+
+
+
+
+
+

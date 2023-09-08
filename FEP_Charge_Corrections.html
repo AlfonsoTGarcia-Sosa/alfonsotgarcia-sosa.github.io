@@ -1,0 +1,552 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;
+      charset=windows-1252">
+    <title>Charge-corrections for FEP</title>
+    <meta content="Alfonso Garcia, MO, and UR" name="author">
+  </head>
+  <body>
+    <h4>Corrections for FEP calculations that change the net charge <br>
+      i.e. corrections for periodic MD simulations with Ewald
+      summation </h4>
+    This document describes how to correct free energy calculations
+    performed when the net charge of the perturbated system changes,
+    using periodic boundary conditions in the MD simulations.<br>
+    <br>
+    The description is based on the article <br>
+    <meta http-equiv="content-type" content="text/html;
+      charset=windows-1252">
+    Rocklin et al., "Calculating the binding free energies of charged
+    species based on explicit-solvent simulations employing lattice-sum
+    methods: An accurate correction scheme for electrostatic finite-size
+    effects" J. Chem. Phys. 139, 2013. <br>
+    <br>
+    The implementation for Amber is described in:<br>
+    M. A. Olsson, Alfonso T. Garc&iacute;a-Sosa, U. Ryde "Binding
+    affinities of the farnesoid X receptor in the D3R Grand Challenge 2
+    estimated by free-energy perturbation and docking" J. Comput.-Aided
+    Mol. Des., 2018, 32:211-224.<br>
+    <br>
+    There are some sample files in /temp4/bio/Fep_misc/Ch_corr/Alf and
+    template input files are in /temp4/bio/Fep_misc/Ch_corr.<br>
+    <title></title>
+    <meta name="generator" content="LibreOffice 4.2.8.2 (Linux)">
+    <style type="text/css">
+	<!--
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 120% }
+	-->
+	</style>
+    <p> </p>
+    <p> <i>Alfonso T. Garc&iacute;a-Sosa, Dec. 2016; Updated by UR and Martin
+        Olsson, Feb. 2017.</i> </p>
+    <p> </p>
+    <hr><br>
+    <br>
+    <p> <b><big>Procedure<br>
+        </big></b></p>
+    <ol>
+      <li>
+        <title></title>
+        <meta name="generator" content="LibreOffice 4.2.8.2 (Linux)">
+        <style type="text/css">
+	<!--
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 120% }
+	--solvateBox x
+TIP3PBOX 10 iso</style> Run the FEP simulations with a changed charge
+        with a cubic (not rectangular) periodic box and constant volume.
+        <br>
+        This is obtained by tleap, using the command:<br>
+        <tt>solvateBox x TIP3PBOX 10 </tt><tt><b>iso</b></tt><br>
+        Use the TIP3P water model.<br>
+        <br>
+      </li>
+      <li>Copy the needed apbs template files:<br>
+        cp <tt>/temp4/bio/Fep_misc/Ch_corr/* .</tt><br>
+        <br>
+      </li>
+      <li>Start with a structure of the protein-ligand complex,
+        preferably the prmtop file and the final mdrest file. The
+        coordinate file should be wrapped.<br>
+        Build a pqr file for this complex with changeparm<br>
+        <tt>changeparm &lt;&lt;EOF</tt><tt><br>
+        </tt><tt>prot.prm</tt><tt><br>
+        </tt><tt>pqr</tt><tt><br>
+        </tt><tt>m</tt><tt><br>
+        </tt><tt>prot-1.00-mdrest5-wrap</tt><tt><br>
+        </tt><tt>p</tt><tt><br>
+        </tt><tt>0</tt><tt><br>
+        </tt><tt>cc.pqr</tt><tt><br>
+        </tt><tt>q</tt><tt><br>
+        </tt><tt>EOF</tt><br>
+        This example, defined PARSE radii, without any added solvent
+        probe.<br>
+        <br>
+      </li>
+      <li>Find the size of the simulated box with changepdb:<br>
+        <tt>changepdb &lt;&lt;EOF</tt><tt><br>
+        </tt><tt>cc.pqr</tt><tt><br>
+        </tt><tt>xyz</tt><tt><br>
+        </tt><tt>q</tt><tt><br>
+        </tt><tt>EOF</tt><br>
+        Values after "Diff = " are the box extent in the x, y and z
+        directions.<br>
+        <br>
+      </li>
+      <li>Also find the charge of the protein and the ligand, as well as
+        the number of water molecules, e.g. by changepdb or changeparm.<br>
+        <br>
+      </li>
+      <li>Strip water molecules from the cc.pqr file:<br>
+        <tt>grep -v WAT cc.pqr &gt;c.pqr</tt><br>
+        <br>
+      </li>
+      <li>Divide the file into one with the protein and one with the
+        ligand, either by hand or by proper grep commands, e.g.<br>
+        <tt>grep L12 c.pqr &gt;l.pqr</tt><tt><br>
+        </tt><tt>grep -v L12 c.pqr | grep -v L41 &gt;p.pqr</tt><br>
+        <br>
+      </li>
+      <li>Construct pqr files with zeroed charges of the protein or the
+        ligand with changepdb:<br>
+        <tt>changepdb &lt;&lt;EOF</tt><tt><br>
+        </tt><tt>l.pqr</tt><tt><br>
+        </tt><tt>pqr</tt><tt><br>
+        </tt><tt>l.pqr</tt><tt><br>
+        </tt><tt>z</tt><tt><br>
+        </tt><tt>wp</tt><tt><br>
+        </tt><tt>l0.pqr</tt><tt><br>
+        </tt><tt>q</tt><tt><br>
+        </tt><tt>EOF</tt><tt><br>
+        </tt><tt>changepdb &lt;&lt;EOF</tt><tt><br>
+        </tt><tt>p.pqr</tt><tt><br>
+        </tt><tt>pqr</tt><tt><br>
+        </tt><tt>p.pqr</tt><tt><br>
+        </tt><tt>z</tt><tt><br>
+        </tt><tt>wp</tt><tt><br>
+        </tt><tt>p0.pqr</tt><tt><br>
+        </tt><tt>q</tt><tt><br>
+        </tt><tt>EOF</tt><br>
+        <br>
+      </li>
+      <li>Now we can construct the final pqr files with simple cat
+        commands:<br>
+        <tt>cat l.pqr &gt;lig_only.pqr</tt><tt><br>
+        </tt><tt>cat p0.pqr l.pqr &gt;lig_in_prot.pqr</tt><tt><br>
+        </tt><tt>cat p.pqr l0.pqr &gt;prot_only.pqr</tt><br>
+        <br>
+      </li>
+      <li>Check that the glen values are large enough to enclose the
+        entire protein in the two apbs_*.in files.<br>
+        Then, run apbs twice with the commands (has to be done locally;
+        they take one or a few minutes each):<br>
+        <tt>export
+          LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/temp4/bio/APBS/APBS-1.5/lib</tt><tt><br>
+        </tt><tt>apbs apbs_hom.in &gt;apbs_hom.out</tt><tt><br>
+        </tt><tt>apbs apbs_het.in &gt;apbs_het.out</tt><br>
+        <br>
+      </li>
+      <li>Run four python calculations to get the RIP files (change the
+        values in <font color="#ff0000"><b>red</b></font> to the proper
+        charges of the protein and the ligand)<br>
+        <tt>python calculate_RIP_het.py protein_RIP_het.dx </tt><tt><font
+            color="#ff0000"><b>-10</b></font></tt><tt>
+          &gt;protein_RIP_het.out </tt><tt><br>
+        </tt><tt>python calculate_RIP_het.py ligand_RIP_het.dx </tt><tt><font
+            color="#ff0000"><b>-1</b></font></tt><tt>
+          &gt;ligand_RIP_het.out </tt><tt><br>
+        </tt><tt>python calculate_RIP_hom.py protein_RIP_hom.dx </tt><tt><b><font
+              color="#ff0000">-10</font></b></tt><tt>
+          &gt;protein_RIP_hom.out </tt><tt><br>
+        </tt><tt>python calculate_RIP_hom.py ligand_RIP_hom.dx </tt><tt><font
+            color="#ff0000"><b>-1</b></font></tt><tt>
+          &gt;ligand_RIP_hom.out </tt><br>
+        <br>
+      </li>
+      <li>Extract the result from these files:<br>
+        <tt>grep RIP *RIP*out | grep kJ</tt><br>
+        <br>
+      </li>
+      <li>Insert all results (protein and ligand charges, box
+        dimensions, #water, and the four energies from the previous
+        command) into the template file in<br>
+        <tt>/temp4/bio/Fep_misc/Ch_corr/charge-corr-fep-template.xlsx</tt><br>
+        <br>
+      </li>
+      <li>Repeat the procedure for the simulation of the <b>ligand free
+          in water,</b> also in a cubic box (in a separate directory):<br>
+        <br>
+      </li>
+      <li>Copy the needed files <br>
+        cp <tt>/temp4/bio/Fep_misc/Ch_corr/apbs* </tt><tt><tt>/temp4/bio/Fep_misc/Ch_corr/cal*</tt>
+          .</tt><br>
+        <br>
+      </li>
+      <li>Build a pqr file for this simulation with changeparm<br>
+        <tt>changeparm &lt;&lt;EOF</tt><tt><br>
+        </tt><tt> wat.prm</tt><tt><br>
+        </tt><tt> pqr</tt><tt><br>
+        </tt><tt> m</tt><tt><br>
+        </tt><tt> wat-1.00-mdrest5</tt><tt>-wrap</tt><tt><br>
+        </tt><tt> p</tt><tt><br>
+        </tt><tt> 0</tt><tt><br>
+        </tt><tt> cc.pqr</tt><tt><br>
+        </tt><tt> q</tt><tt><br>
+        </tt><tt> EOF</tt><br>
+        This example, defined PARSE radii, without any added solvent
+        probe.<br>
+        <br>
+      </li>
+      <li>Find the size of the simulated box with changepdb, xyz command<br>
+        Also the number of water molecules.<br>
+        <br>
+      </li>
+      <li>Strip water molecules from the cc.pqr file:<br>
+        <tt>grep -v WAT cc.pqr &gt;c.pqr</tt><br>
+        <br>
+      </li>
+      <li>Remove the other ligand, e.g.<br>
+        grep L12 c.pqr &gt;l.pqr<br>
+        <br>
+      </li>
+      <li>Construct a pqr file with zeroed charges of the ligand with
+        changepdb:<br>
+        <tt>changepdb &lt;&lt;EOF</tt><tt><br>
+        </tt><tt> l.pqr</tt><tt><br>
+        </tt><tt> pqr</tt><tt><br>
+        </tt><tt> l.pqr</tt><tt><br>
+        </tt><tt> z</tt><tt><br>
+        </tt><tt> wp</tt><tt><br>
+        </tt><tt> l0.pqr</tt><tt><br>
+        </tt><tt> q</tt><tt><br>
+        </tt><tt> EOF</tt><br>
+        <br>
+      </li>
+      <li>Now we can construct the final pqr files with simple cat
+        commands:<br>
+        <tt>\cp l.pqr lig_only.pqr</tt><tt><br>
+        </tt><tt>\cp l.pqr lig_in_prot.pqr</tt><tt><br>
+        </tt><tt>\cp l0.pqr prot_only.pqr</tt><br>
+        This and the following command is not ideal for the ligand-only
+        calculation (i.e. some calculations are made in vain), but
+        rather to avoid any changes in the apbs input files.<br>
+        <br>
+      </li>
+      <li>Run apbs twice with the commands):<br>
+        <tt>apbs apbs_hom.in &gt;apbs_hom.out</tt><tt><br>
+        </tt><tt> apbs apbs_het.in &gt;apbs_het.out</tt><br>
+        <br>
+      </li>
+      <li>Run two python calculations to get the RIP files (change the
+        ligand charge in <font color="#ff0000"><b>red</b></font>)<br>
+        <tt>python calculate_RIP_het.py ligand_RIP_het.dx </tt><tt><font
+            color="#ff0000"><b>-1</b></font></tt><tt>
+          &gt;ligand_RIP_het.out </tt><tt><br>
+        </tt><tt> python calculate_RIP_hom.py ligand_RIP_hom.dx </tt><tt><font
+            color="#ff0000"><b>-1</b></font></tt><tt>
+          &gt;ligand_RIP_hom.out </tt><br>
+        <br>
+      </li>
+      <li>Extract the result from these files:<br>
+        <tt>grep RIP *RIP*out | grep kJ</tt><br>
+        <br>
+      </li>
+      <li>Insert the results box dimensions, #water, and the two
+        energies into the template file, which now gives you the final
+        results.<br>
+        <br>
+      </li>
+    </ol>
+    <p> </p>
+    <hr size="2" width="100%">
+    <p><b><big>Running APBS</big></b></p>
+    Below are sample apbs input files.<br>
+    In the /temp4/bio/Fep_misc/Ch_corr directory, there are two such
+    files, which only differ in the output file name and in the line<br>
+    <code>sdie 97.0 <br>
+      which is instead 1.0 in the homogenous case.</code><br>
+    <code> <br>
+      #</code><code><code>#############################################################################
+
+        <br>
+      </code> Heterogenous PB calculations to calculate the residual
+      integrated <br>
+      # potentials I_P and I_L. <br>
+      # <br>
+      # Input files: <br>
+      # prot_only.pqr - The protein-ligand complex, but with only the
+      protein <br>
+      # atoms charged. <br>
+      # lig_in_prot.pqr - The protein-ligand complex, but with only the
+      ligand <br>
+      # atoms charged. <br>
+      # lig_only.pqr - The ligand only, in the same coordinates as the
+      above. <br>
+      # Used for centering the box only. <br>
+      # <br>
+      # Output files: <br>
+      # protein_RIP.dx - The potential grid based on prot_only.pqr <br>
+      # ligand_RIP.dx - The potential grid based on lig_in_prot.pqr <br>
+      # <br>
+      #############################################################################
+
+      <br>
+      # READ IN MOLECULES <br>
+      read <br>
+      mol pqr prot_only.pqr <br>
+      mol pqr lig_in_prot.pqr <br>
+      mol pqr lig_only.pqr <br>
+      end <br>
+      <br>
+      # CALCULATE POTENTIAL WITH ONLY THE PROTEIN CHARGES <br>
+      elec name prot_only <br>
+      mg-manual <br>
+      dime 257 257 257 <br>
+      <font color="#ff0000"><b>glen 120 120 120 </b></font><br>
+      gcent mol 3 <br>
+      mol 1 <br>
+      lpbe <br>
+      bcfl mdh <br>
+      pdie 1.0 <br>
+      sdie 97.0 <br>
+      chgm spl4 <br>
+      srfm smol <br>
+      srad 1.4 <br>
+      swin 0.3 <br>
+      sdens 40.0 <br>
+      temp 300.0 <br>
+      calcenergy no <br>
+      calcforce no <br>
+      write pot dx protein_RIP <br>
+      end <br>
+      <br>
+      # CALCULATE POTENTIAL WITH ONLY THE LIGAND CHARGES <br>
+      elec name lig_only <br>
+      mg-manual <br>
+      dime 257 257 257 <br>
+      <font color="#ff0000"><b>glen 120 120 120 </b><b><br>
+        </b><b> </b></font>gcent mol 3 <br>
+      mol 2 <br>
+      lpbe <br>
+      bcfl mdh <br>
+      pdie 1.0 <br>
+      sdie 97.0 <br>
+      chgm spl4 <br>
+      srfm smol <br>
+      srad 1.4 <br>
+      swin 0.3 <br>
+      sdens 40.0 <br>
+      temp 300.0 <br>
+      calcenergy no <br>
+      calcforce no <br>
+      write pot dx ligand_RIP <br>
+      end <br>
+      <br>
+      # SO LONG <br>
+      quit <br>
+    </code> ########################################################## <br>
+    <br>
+    Substitute both <code>glen</code> lines in the <code>apbs.in</code>
+    file to the length of the box in Angtroms. <br>
+    <br>
+    <code>Apbs is run by the command:<br>
+      export
+      LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/temp4/bio/APBS/APBS-1.5/lib <br>
+      /temp4/bio/APBS/APBS-1.5/bin/apbs apbs.in <br>
+      <br>
+    </code> If all is well, this will create files <code>protein_RIP.dx</code>
+    and <code>ligand_RIP.dx</code> which are potential grids.<br>
+    <br>
+    If the program does not complete and an error is produced about
+    malloc (memory allocation), then either run the calculations on a
+    different machine (preferred-option), or modify the <code>apbs.in</code>
+    file line for number of grid points per processor to <code>dime 161</code>
+    (less-preferred option as lower resolution or accuracy may result,
+    see <a href="http://www.poissonboltzmann.org/docs/apbs-overview">http://www.poissonboltzmann.org/docs/apbs-overview</a>.
+    <br>
+    <br>
+    <hr size="2" width="100%">
+    <h4>Formulae</h4>
+    <p> These calculations correct the obtained change in free energy in
+      periodic box conditions ("raw" &#916;&#916;G<sub>MD,PBC</sub>) with the
+      correction terms &#916;&#916;G<sub>ANA</sub> and &#916;&#916;G<sub>DSC</sub>, to give
+      &#916;&#916;G<sub>MD,NBC</sub>, which is independent of box size and
+      corrects for several effects arising from net charges in periodic
+      boxes: <br>
+      <br>
+      &#916;&#916;G<sub>MD,NBC</sub> = &#916;&#916;G<sub>MD,PBC</sub> + &#916;&#916;G<sub>NET</sub> +
+      &#916;&#916;G<sub>USV</sub> + &#916;&#916;G<sub>RIP</sub> + &#916;&#916;G<sub>EMP</sub> + &#916;&#916;G<sub>DSC</sub>
+      <br>
+      <br>
+      where <br>
+      &#916;&#916;G<sub>NET</sub> is a correction for periodicity-induced
+      net-charge interactions, <br>
+      &#916;&#916;G<sub>USV</sub> is a correction for periodicity-induced
+      net-charge undersolvation, <br>
+      &#916;&#916;G<sub>RIP</sub> is a correction for residual integrated
+      potential effects, <br>
+      &#916;&#916;G<sub>EMP</sub> is an empirical term to reproduce the exact
+      analytical result in the special case of a single point charge at
+      the center of a spherical cavity, and <br>
+      &#916;&#916;G<sub>DSC</sub> is a correction for discrete solvent effects. <br>
+    </p>
+    <p>I<sub>L,SLV</sub> = I<sub>L</sub> - I<sub>L_hom</sub> &nbsp;
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(The
+
+      solvent contribution to I<sub>L</sub>)<br>
+      R<sub>L</sub> = {I<sub>L,SLV</sub>/[(1/(8&#960;&#949;<sub>0</sub>)) * (4&#960;/3)
+      * (1 - 1/&#949;<sub>s</sub>)|Q<sub>L</sub>|]}<sup>1/2</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(The
+
+      effective solvation radius R<sub>L)</sub><br>
+      &#916;&#916;G<sub>RIP</sub> = [(I<sub>P</sub> + I<sub>L</sub>)(Q<sub>P</sub>
+      + Q<sub>L</sub>) - I<sub>P</sub>Q<sub>P</sub>]/(L<sup>3</sup>) <br>
+      &#916;&#916;G<sub>EMP</sub> = - (1/(8&#960;&#949;<sub>0</sub>)) * (16&#960;<sup>2</sup>/45)
+      * (1 - 1/&#949;<sub>s</sub>) * [(Q<sub>P</sub> + Q<sub>L</sub>)<sup>2</sup>
+      - Q<sup>2</sup><sub>P</sub>] * R<sub>L</sub><sup>5</sup>/<sub>L</sub><sup>6</sup>
+      <br>
+      <br>
+      &#916;&#916;G<sub>NET</sub> + &#916;&#916;G<sub>USV</sub> = &#916;&#916;G<sub>NET</sub>/&#949;<sub>s</sub>
+      <br>
+      &#916;&#916;G<sub>NET</sub> = - (&#958;<sub>LS</sub>/8&#960;&#949;<sub>0</sub>) * [(Q<sub>P</sub>
+      + Q<sub>L</sub>)<sup>2</sup> - Q<sup>2</sup><sub>P</sub>]/L <br>
+      &#916;&#916;G<sub>DSC</sub> = - ((&#947;<sub>s</sub>Q<sub>L</sub>)/6&#949;<sub>0</sub>)
+      * (N<sub>s</sub>/L<sup>3</sup>) <br>
+    </p>
+    <p>Here, <br>
+      Q<sub>P</sub> is the net charge of the protein<br>
+      Q<sub>L</sub> is the net charge of the protein<br>
+      L is the length of the box in nm<br>
+      N<sub>s</sub> is the number of solvent molecules in the box </p>
+    <p>From the <code>protein_RIP_het.out</code> file, use the reported
+      RIP as potential I<sub>P</sub>. <br>
+      From the <code>ligand_RIP_het.out</code> file, use the reported
+      RIP as potential I<sub>L</sub>. <br>
+      From the <code>ligand_RIP_hom.out</code> file, use the reported
+      RIP as potential I<sub>L_hom</sub>. <br>
+    </p>
+    <p>Constants:<br>
+      &#949;<sub>0</sub> is the permittivity of vacuum (the term 1/(4&#960;&#949;<sub>0</sub>)
+      is <b>138.93545585 </b>kJ nm <i>e</i><sup>-2</sup> mol<sup>-1</sup>).<br>
+      <meta http-equiv="content-type" content="text/html;
+        charset=windows-1252">
+    </p>
+    <p>
+      <title></title>
+      <meta name="generator" content="LibreOffice 4.2.8.2 (Linux)">
+      <style type="text/css">
+	<!--
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 120% }
+	-->
+	</style> </p>
+    <p style="margin-bottom: 0cm; font-weight: normal; line-height:
+      100%"> &#958;<sub>LS</sub> Cubic lattice-sum (Wiegner) integration
+      constant. Unitless. <sub> </sub>&#958;<sub>LS</sub> = <b>-2.837297</b>.</p>
+    &#949;<sub>s</sub> is the static relative dieletric permittivity of the
+    medium, for TIP3P = <b>97</b><br>
+    &#947;<sub>s</sub> is the quadrupole-moment trace of the solvent model
+    relative to its single van der Waals interaction site. For TIP3P, it
+    is <b>0.00764</b> <i>e</i> nm<sup>2</sup>; note that the article
+    gave a 10 times too large value.<br>
+    <br>
+    <p></p>
+    <p> </p>
+    <hr size="2" width="100%">
+    <p><b><big>Prerequisites</big></b></p>
+    <p> You need to have: </p>
+    <ul>
+      <li>an APBS input file with termination .in, e.g. <code>apbs.in</code>.
+        The sample input file is provided below. </li>
+      <li>a pdb-file of the complex with hydrogen atoms and without
+        water molecules. </li>
+    </ul>
+    The equations used as in Rocklin et al. JCP 2013 are derived for a
+    cubic box of water molecules using TIP3P, that has been run at
+    constant volume.<br>
+    If a different water model is used, then the quadrupole-moment
+    trace, <code>gamma</code>, must be changed in the xlsx file. It is
+    easily calculated from (Eqn. 29 in the article):<br>
+    gamma_s = Sum(q_i r_i^2)<br>
+    <p> </p>
+    <hr size="2" width="100%">
+    <p><b><big>Making .pqr files</big></b></p>
+    <p> APBS requires the input file .in, in addition to structure files
+      of the complex in .pqr format (related to .pdb format, with
+      charges and radii as last columns instead of occupancies and
+      B-factors). Thus, the .pqr format is of the form: Field_name
+      Atom_number Atom_name Residue_name Chain_ID Residue_number X Y Z
+      Charge Radius. The format is free so the fields must be separated
+      by at least one space.<br>
+    </p>
+    <p>Our changepdb and changeparm software can write out (and read)
+      pqr files from pdb, prmtop, mdrest, and mdcrd files, constructing
+      various sets of atomic radii.</p>
+    <p>Three pqr files are needed: lig_in_prot.pqr, prot_only.pqr, and
+      lig_only.pqr. <br>
+      The should contain all the same coordinates and radii (from the
+      protein-ligand complex).<br>
+      None of them contain any water molecules.<br>
+      <br>
+      lig_only.pqr contains only the ligand atoms and with full charges.
+      <br>
+      lig_in_prot.pqr contains both protein and ligand atoms, but with
+      zeroed protein charges.<br>
+      prot_only.pqr also has the both protein and atoms, but now the
+      ligand charges are zeroed. <br>
+      <br>
+      Create a file that is called <code>complex.pdb</code> with
+      protein and ligand atoms from the charged state of the trajectory,
+      without water molecules<br>
+      <br>
+      Either: <br>
+      <br>
+      Run changepdb to include charges and radii and output a .pqr file
+      <br>
+      <br>
+      OR <br>
+      <br>
+      Upload the .pdb to the PDQ2PQR server at
+      http://nbcr-222.ucsd.edu/pdb2pqr_2.1.1 <br>
+      <br>
+    </p>
+    <hr>
+    <p> </p>
+    <center>
+	    ------------------------~~oOo~~-----------------------
+
+
+	    <br>
+    </center>
+
+    <br><hr>
+    <h3><a href="research.html">Research</a></h3>
+    <h3><a href="publications.html">Publications</a></h3>
+    <h3><a href="videos.html">Videos</a></h3>
+    <h3><a href="inthenews.html">In The News</a><h3>
+		    <h3><a href="https://github.com/AlfonsoTGarcia-Sosa/ML">Garcia-Sosa Github</a></h3>
+		    <h3><a href="http://hermes.chem.ut.ee/~alfx/research.html#pea6">WaterScore online calculator</a></h3>
+		    <h3><a href="http://hermes.chem.ut.ee/~alfx/druglogit.html">DrugLogit online calculator</a></h3>
+		    <h3><a href="download.html">Download</a></h3>
+		    <h3><a href="index.html">Contact</a></h3>
+		    <br>
+		    </div>
+
+		    <script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+		    </script>
+
+		    <script type="text/javascript">
+try {
+	var pageTracker = _gat._getTracker("UA-7383406-1");
+	pageTracker._trackPageview();
+} catch(err) {}</script>
+
+
+  </body>
+</html>

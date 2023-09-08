@@ -1,0 +1,917 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="Author" content="A.T. Garcia-Sosa Alfonso Tlatoani Garcia Sosa Alfonso T. Garcia-Sosa Uko Maran Csaba Hetenyi Mare Oja Tartu Chemistry Estonia">
+
+<title>DrugLogit, probability of classifying as drug. Research: Alfonso T. Garcia-Sosa</title>
+<link type="text/css" rel="stylesheet" href="estilo.css"  />
+
+<meta name="description=" content="DrugLogit Functions and calculators for predicting the probability of a chemical compound classifying as a drug or non-drug, and disease or organ specificity.">
+
+<script TYPE="text/javascript">
+<!--
+function calcIt2() {
+      var acceptorCount = parseFloat(document.calcer.inputA.value)
+      var Coeffa = 2.989
+      var Coeffb1 = 0.375
+
+      var preOut1 = Coeffa - (Coeffb1*acceptorCount) 
+
+      var logE = 0.434294481
+      var preOut2 = preOut1*logE
+      var preOut3= Math.pow(preOut1, preOut2)
+      document.calcer.output.value = preOut3/(1+preOut3)
+      }
+  // -->
+</script>
+
+<script TYPE="text/javascript">
+<!--
+function calcIt3() {
+      var PSA = parseFloat(document.calcer3.inputA.value)
+      var Coeffa = 2.710257
+      var Coeffb1 = 0.026345
+      var preOut1 = Coeffa - (Coeffb1*PSA) 
+      var logE = 0.434294481
+      var preOut2 = preOut1*logE
+      var preOut3= Math.pow(preOut1, preOut2)
+      document.calcer3.output.value = preOut3/(1+preOut3)
+      }
+  // -->
+</script>
+
+<script TYPE="text/javascript">
+<!--
+function calcIt4() {
+      var ringCount = parseFloat(document.calcer4.inputA.value)
+      var PSA = parseFloat(document.calcer4.inputB.value)
+      var Coeffa = 1.69078
+      var Coeffb1 = 0.505987
+      var Coeffb2 = 0.029881
+      var preOut1 = Coeffa + (Coeffb1*ringCount) - (Coeffb2*PSA)
+      var logE = 0.434294481
+      var preOut2 = preOut1*logE
+      var preOut3= Math.pow(preOut1, preOut2)
+      document.calcer4.output.value = preOut3/(1+preOut3)
+      }
+  // -->
+</script>
+
+<script TYPE="text/javascript">
+<!--
+function calcIt5() {
+      var aliphaticringCount = parseFloat(document.calcer5.inputA.value)
+      var logP = parseFloat(document.calcer5.inputB.value)
+      var MW = parseFloat(document.calcer5.inputC.value)
+
+      var Coeffa = 2.3006722
+      var Coeffb1 = 0.8081762
+      var Coeffb2 = 0.5030011
+      var Coeffb3 = -0.0101506
+
+      var preOut1 = Coeffa + (Coeffb1*aliphaticringCount) + (Coeffb2*logP) + (Coeffb3*MW)
+      var logE = 0.434294481
+      var preOut2 = preOut1*logE
+      var preOut3= Math.pow(preOut1, preOut2)
+      document.calcer5.output.value = preOut3/(1+preOut3)
+      }
+  // -->
+</script>
+
+<script TYPE="text/javascript">
+<!--
+function calcIt6() {
+      var aliphaticringCount = parseFloat(document.calcer6.inputA.value)
+      var PSA = parseFloat(document.calcer6.inputB.value)
+      var bondCount = parseFloat(document.calcer6.inputC.value)
+
+      var Coeffa = 2.669611
+      var Coeffb1 = 0.785674
+      var Coeffb2 = -0.030988
+      var Coeffb3 = -0.011150
+
+      var preOut1 = Coeffa + (Coeffb1*aliphaticringCount) + (Coeffb2*PSA) + (Coeffb3*bondCount)
+      var logE = 0.434294481
+      var preOut2 = preOut1*logE
+      var preOut3= Math.pow(preOut1, preOut2)
+      document.calcer6.output.value = preOut3/(1+preOut3)
+      }
+  // -->
+</script>
+
+<script TYPE="text/javascript">
+<!--
+function calcIt7() {
+      var logP = parseFloat(document.calcer7.inputA.value)
+      var wiener = parseFloat(document.calcer7.inputB.value)
+      var PSA = parseFloat(document.calcer7.inputC.value)
+
+      var Coeffa = 2.061
+      var Coeffb1 = 0.1534
+      var Coeffb2 = -0.0001188
+      var Coeffb3 = -0.01828
+
+      var preOut1 = Coeffa + (Coeffb1*logP) + (Coeffb2*wiener) + (Coeffb3*PSA)
+      var logE = 0.434294481
+      var preOut2 = preOut1*logE
+      var preOut3= Math.pow(preOut1, preOut2)
+      document.calcer7.output.value = preOut3/(1+preOut3)
+      }
+  // -->
+</script>
+
+<script TYPE="text/javascript">
+<!--
+function calcIt8() {
+      var balabanindex = parseFloat(document.calcer8.inputA.value)
+      var aromaticringCount = parseFloat(document.calcer8.inputB.value)
+      var donorCount = parseFloat(document.calcer8.inputC.value)
+      var DG = parseFloat(document.calcer8.inputD.value)
+      var NHA = parseFloat(document.calcer8.inputE.value)
+
+      var Coeffa = 3.50279
+      var Coeffb1 = -0.82393
+      var Coeffb2 = -0.29709
+      var Coeffb3 = -0.76218
+      var Coeffb4 = -1.88585
+
+      var preOut1 = Coeffa + (Coeffb1*balabanindex) + (Coeffb2*aromaticringCount) + (Coeffb3*donorCount) + (Coeffb4*(DG/NHA))
+      var logE = 0.434294481
+      var preOut2 = preOut1*logE
+      var preOut3= Math.pow(preOut1, preOut2)
+      document.calcer8.output.value = preOut3/(1+preOut3)
+      }
+  // -->
+</script>
+
+<script TYPE="text/javascript">
+<!--
+function calcIt9() {
+      var aliphaticringCount = parseFloat(document.calcer9.inputA.value)
+      var logP = parseFloat(document.calcer9.inputB.value)
+      var PSA = parseFloat(document.calcer9.inputC.value)
+      var DG = parseFloat(document.calcer9.inputD.value)
+      var wiener = parseFloat(document.calcer9.inputE.value)
+
+      var Coeffa = 0.922615
+      var Coeffb1 = 0.756226
+      var Coeffb2 = 0.153282
+      var Coeffb3 = -0.025694
+      var Coeffb4 = -56.162183
+
+      var preOut1 = Coeffa + (Coeffb1*aliphaticringCount) + (Coeffb2*logP) + (Coeffb3*PSA) + (Coeffb4*(DG/wiener))
+      var logE = 0.434294481
+      var preOut2 = preOut1*logE
+      var preOut3= Math.pow(preOut1, preOut2)
+      document.calcer9.output.value = preOut3/(1+preOut3)
+      }
+  // -->
+</script>
+
+<script TYPE="text/javascript">
+<!--
+function calcIt12() {
+      var NoC = parseFloat(document.calcer12.inputA.value)
+      var PSA = parseFloat(document.calcer12.inputB.value)
+      var molpol = parseFloat(document.calcer12.inputC.value)
+
+      var Coeffa = -4.918909
+      var Coeffb1 = 0.428763
+      var Coeffb2 = 0.031341
+      var Coeffb3 = -0.232472
+
+      var preOut1 = Coeffa + (Coeffb1*NoC) + (Coeffb2*PSA) + (Coeffb3*molpol)
+      var logE = 0.434294481
+      var preOut2 = preOut1*logE
+      var preOut3= Math.pow(preOut1, preOut2)
+      document.calcer12.output.value = preOut3/(1+preOut3)
+      }
+  // -->
+</script>
+
+<script TYPE="text/javascript">
+<!--
+function calcIt13() {
+      var aromaticringCount = parseFloat(document.calcer13.inputA.value)
+      var aliphaticringCount = parseFloat(document.calcer13.inputB.value)
+      var NoC = parseFloat(document.calcer13.inputC.value)
+      var PSA = parseFloat(document.calcer13.inputD.value)
+      var DG = parseFloat(document.calcer13.inputE.value)
+      var MSA = parseFloat(document.calcer13.inputF.value)
+
+      var Coeffa = 2.436162
+      var Coeffb1 = 1.485691
+      var Coeffb2 = 0.775142
+      var Coeffb3 = -0.206481
+      var Coeffb4 = -0.028505
+      var Coeffb5 = 47.786313
+
+      var preOut1 = Coeffa + (Coeffb1*aromaticringCount) + (Coeffb2*aliphaticringCount) + (Coeffb3*NoC) + (Coeffb4*PSA) + (Coeffb5*(DG/MSA))
+      var logE = 0.434294481
+      var preOut2 = preOut1*logE
+      var preOut3= Math.pow(preOut1, preOut2)
+      document.calcer13.output.value = preOut3/(1+preOut3)
+      }
+  // -->
+</script>
+
+<script TYPE="text/javascript">
+<!--
+function calcIt14() {
+      var aromaticringCount = parseFloat(document.calcer14.inputA.value)
+      var PSA = parseFloat(document.calcer14.inputB.value)
+      var DG = parseFloat(document.calcer14.inputC.value)
+      var apolarSA = parseFloat(document.calcer14.inputD.value)
+
+      var Coeffa = -3.168
+      var Coeffb1 = 1.978
+      var Coeffb2 = -0.01644
+      var Coeffb3 = -0.0156
+
+      var preOut1 = Coeffa + (Coeffb1*aromaticringCount) + (Coeffb2*PSA) + (Coeffb3*(DG/apolarSA))
+      var logE = 0.434294481
+      var preOut2 = preOut1*logE
+      var preOut3= Math.pow(preOut1, preOut2)
+      document.calcer14.output.value = preOut3/(1+preOut3)
+      }
+  // -->
+</script>
+
+<script TYPE="text/javascript">
+<!--
+function calcIt15() {
+      var balabanindex = parseFloat(document.calcer15.inputA.value)
+      var logP = parseFloat(document.calcer15.inputB.value)
+      var MSA = parseFloat(document.calcer15.inputC.value)
+      var aromaticatomCount = parseFloat(document.calcer15.inputD.value)
+
+      var Coeffa = 5.869193
+      var Coeffb1 = -1.265168
+      var Coeffb2 = 0.946602
+      var Coeffb3 = -0.006236
+      var Coeffb4 = -0.167165
+
+      var preOut1 = Coeffa + (Coeffb1*balabanindex) + (Coeffb2*logP) + (Coeffb3*MSA) + (Coeffb4*aromaticatomCount)
+      var logE = 0.434294481
+      var preOut2 = preOut1*logE
+      var preOut3= Math.pow(preOut1, preOut2)
+      document.calcer15.output.value = preOut3/(1+preOut3)
+      }
+  // -->
+</script>
+
+<script TYPE="text/javascript">
+<!--
+function calcIt16() {
+      var aromaticringCount = parseFloat(document.calcer16.inputA.value)
+      var PSA = parseFloat(document.calcer16.inputB.value)
+      var wienerpolarity = parseFloat(document.calcer16.inputC.value)
+
+      var Coeffa = -0.52963
+      var Coeffb1 = 1.49716
+      var Coeffb2 = -0.06613
+      var Coeffb3 = 0.10067
+
+      var preOut1 = Coeffa + (Coeffb1*aromaticringCount) + (Coeffb2*PSA) + (Coeffb3*wienerpolarity)
+      var logE = 0.434294481
+      var preOut2 = preOut1*logE
+      var preOut3= Math.pow(preOut1, preOut2)
+      document.calcer16.output.value = preOut3/(1+preOut3)
+      }
+  // -->
+</script>
+
+<script TYPE="text/javascript">
+<!--
+function calcIt17() {
+      var ringCount = parseFloat(document.calcer17.inputA.value)
+      var NoC = parseFloat(document.calcer17.inputB.value)
+      var PSA = parseFloat(document.calcer17.inputC.value)
+      var wienerpolarity = parseFloat(document.calcer17.inputD.value)
+
+      var Coeffa = 3.37506
+      var Coeffb1 = 1.45531
+      var Coeffb2 = -0.38261
+      var Coeffb3 = -0.07217
+      var Coeffb4 = 0.20073
+
+      var preOut1 = Coeffa + (Coeffb1*ringCount) + (Coeffb2*NoC) + (Coeffb3*PSA) + (Coeffb4*wienerpolarity)
+      var logE = 0.434294481
+      var preOut2 = preOut1*logE
+      var preOut3= Math.pow(preOut1, preOut2)
+      document.calcer17.output.value = preOut3/(1+preOut3)
+      }
+  // -->
+</script>
+
+<script TYPE="text/javascript">
+<!--
+function calcIt18() {
+      var logP = parseFloat(document.calcer18.inputA.value)
+      var PSA = parseFloat(document.calcer18.inputB.value)
+      var apolarSA = parseFloat(document.calcer18.inputC.value)
+      var donorCount = parseFloat(document.calcer18.inputD.value)
+
+      var Coeffa = 4.681104
+      var Coeffb1 = -0.608903
+      var Coeffb2 = -0.045470
+      var Coeffb3 = 0.007935
+      var Coeffb4 = -1.237257
+
+      var preOut1 = Coeffa + (Coeffb1*logP) + (Coeffb2*PSA) + (Coeffb3*apolarSA) + (Coeffb4*donorCount)
+      var logE = 0.434294481
+      var preOut2 = preOut1*logE
+      var preOut3= Math.pow(preOut1, preOut2)
+      document.calcer18.output.value = preOut3/(1+preOut3)
+      }
+  // -->
+</script>
+
+<script TYPE="text/javascript">
+<!--
+function calcIt19() {
+      var aromaticringCount = parseFloat(document.calcer19.inputA.value)
+      var hyperwienerindex = parseFloat(document.calcer19.inputB.value)
+      var DG = parseFloat(document.calcer19.inputC.value)
+      var apolarSA = parseFloat(document.calcer19.inputD.value)
+
+      var Coeffa = -5.656
+      var Coeffb1 = 3.981
+      var Coeffb2 = -0.0002155
+      var Coeffb3 = -180.2
+
+      var preOut1 = Coeffa + (Coeffb1*aromaticringCount) + (Coeffb2*hyperwienerindex) + (Coeffb3*(DG/apolarSA))
+      var logE = 0.434294481
+      var preOut2 = preOut1*logE
+      var preOut3= Math.pow(preOut1, preOut2)
+      document.calcer19.output.value = preOut3/(1+preOut3)
+      }
+  // -->
+</script>
+
+<script TYPE="text/javascript">
+<!--
+function calcIt20() {
+      var logP = parseFloat(document.calcer20.inputA.value)
+      var PSA = parseFloat(document.calcer20.inputB.value)
+      var DG = parseFloat(document.calcer20.inputC.value)
+      var NoC = parseFloat(document.calcer20.inputD.value)
+
+      var Coeffa = -0.96111
+      var Coeffb1 = 1.06965
+      var Coeffb2 = -0.02090
+      var Coeffb3 = -4.50142
+
+      var preOut1 = Coeffa + (Coeffb1*logP) + (Coeffb2*PSA) + (Coeffb3*(DG/NoC))
+      var logE = 0.434294481
+      var preOut2 = preOut1*logE
+      var preOut3= Math.pow(preOut1, preOut2)
+      document.calcer20.output.value = preOut3/(1+preOut3)
+      }
+  // -->
+</script>
+
+<script TYPE="text/javascript">
+<!--
+function calcIt21() {
+      var donorCount = parseFloat(document.calcer21.inputA.value)
+      var DG = parseFloat(document.calcer21.inputB.value)
+      var apolarSA = parseFloat(document.calcer21.inputC.value)
+
+      var Coeffa = 0.2898
+      var Coeffb1 = -0.7762
+      var Coeffb2 = -104.7971
+
+      var preOut1 = Coeffa + (Coeffb1*donorCount) + (Coeffb2*(DG/apolarSA))
+      var logE = 0.434294481
+      var preOut2 = preOut1*logE
+      var preOut3= Math.pow(preOut1, preOut2)
+      document.calcer21.output.value = preOut3/(1+preOut3)
+      }
+  // -->
+</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-31751835-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<font face="Garamond">
+
+<h3>Probability of Drugs and Non-Drugs</h3>
+<hr>
+<br>
+</font>
+
+<div style="font-family:arial;font-size:110%;line-height:150%">
+<p class="research">
+<center>Predicting the probability of a compound being classified as a drug or non-drug,
+as well as disease category (or organ) classification (DC).
+<br>
+<img SRC="tocPdrugnondrug.jpg" border="0" ><br><br></center>
+<br>
+
+<h3>Functions for calculating drug, non-drug and DC classification.
+</h3>
+The following logistic regression functions are based on the formula:
+
+<br><br><br><center>
+<img SRC="Peq2.jpg" border="0"><br><br></center>
+<br>
+<align="justified">
+
+and are described in A.T. Garcia-Sosa,* M. Oja, C. Hetenyi, U. Maran, "DrugLogit: Logistic Discrimination between Drugs and Nondrugs Including Disease-Specificity by Assigning Probabilities Based on Molecular Properties", <i>Journal of Chemical Information and Modeling</i>, 2012, Vol. 52, Iss. 8, 2165-2180. DOI: <a href="http://pubs.acs.org/doi/pdf/10.1021/ci200587h">http://dx.doi.org/10.1021/ci200587h </a>, <a href="http://pubs.acs.org/doi/pdf/10.1021/ci200587h"> [PDF]</a>.<br>
+The data used to obtain the functions is available in the Supporting Information to this paper, available <a href="http://pubs.acs.org/doi/abs/10.1021/ci200587h">here</a>.
+<br>If you use the calculators or functions, or modify them, please cite this paper.
+
+<br><br>
+You can use the DrugLogit calculators<sup>&copy;</sup> below to type in the values of the properties of compounds and compute their drug probability value according to any of the equations 3 through 10 of the article and this page. 
+The non-drug probability is 1 &minus; Pdrug. 
+<br>
+<br>The DC probability is computed using equations 14 through 23.
+<br><br>
+The equations can be chosen based on their individual prediction accuracy, or the relevance and availability of their physicochemical property variables to a given use case. They can also be used to filter compounds by applying one or several of the equations in hierarchical (i.e., successively applied) filters, or by chosing compounds that are predicted in concensus by two or more equations. It is important to note that due to the small number of variables in the equations, they remain immediately interpretable in chemical and physical terms.
+<br><br>
+Molecular properties of compounds can be easily calculated using, for example, <a href="http://www.chemaxon.com"> Marvin</a>, or looked-up in databases such as <a href="http://pubchem.ncbi.nlm.nih.gov/"> PubChem</a>, or others. The equations were derived using Marvin and calculator plugins from ChemAxon, and logP values calculated by the atom-additive method in XLogP.
+<br><br>
+<u>Abbrev.</u>
+<br>
+Acceptors and Donors are the number of hydrogen bond acceptors and donors, resp., in the molecule.
+<br>
+Bonds is the total number of bonds in the molecule.
+<br>
+PSA, apolarSA, and MSA are, resp., the polar, apolar, and total molecular surface area in &Aring;<sup>2</sup>.
+<br>
+Rings is the total number of rings in the molecule.
+<br>
+log<em>P</em> is the logarithm (base 10) of the octanol/water partition function.
+<br>
+MW is the molar mass (or exact mass) of a molecule in g/mol.
+<br>
+NHA is the number of heavy atoms (<em>i.e.</em>, non hydrogen atoms) in the molecule.
+<br>
+&Delta;G is the binding free energy in kcal/mol.
+<br>
+
+
+<center>
+<h3><u>DrugLogit Calculators<sup>&copy;</sup></u></h3>
+<br><u>Note:</u> A value of NaN indicates a very small value, close to zero.<br>
+You need to have JavaScript enabled on your web browser.
+<br><br><br>
+
+<b>Functions to calculate the probability of classifying as a drug <em>vs.</em> non-drugs.</b>
+<br>
+<br>
+<TABLE BORDER="1">
+<TR>
+<TD>
+<center>
+
+<h4>Eq. 3 </h4>
+<form name="calcer">
+
+<TABLE BORDER="0">
+<TR><TD>Acceptors </TD> <TD><input type="text" name="inputA" value="0" size=7><br> </TD> </TR>
+</TABLE>
+<p><input type="button" value="Calculate" onClick="calcIt2()"></p>
+<p>&nbsp;&nbsp;Pdrug value:&nbsp;&nbsp;
+<input type="text" name="output" size=19>&nbsp;&nbsp;
+</p>
+</form>
+</center>
+</TD>
+
+<TD>
+<center>
+<h4>Eq. 4 </h4>
+<br>
+<form name="calcer3">
+   <TABLE BORDER="0">
+<TR><TD>PSA &nbsp;</TD><TD><input type="text" name="inputA" value="0" size=7><br></TD></TR>
+   </TABLE>
+<p><input type="button" value="Calculate" onClick="calcIt3()"></p>
+
+<p>&nbsp;&nbsp;Pdrug value:&nbsp;&nbsp;
+<input type="text" name="output" size=19>&nbsp;&nbsp;
+</p>
+</form>
+</center>
+</TD>
+<TD>
+<center>
+<h4>Eq. 5 </h4>
+<br>
+<form name="calcer4">
+<TABLE BORDER="0">
+<TR><TD>Rings &nbsp;</TD><TD><input type="text" name="inputA" value="0" size=7><br> </TD> </TR>
+<TR><TD>PSA &nbsp;</TD><TD><input type="text" name="inputB" value="0" size=7><br> </TD></TR>
+</TABLE>
+<p><input type="button" value="Calculate" onClick="calcIt4()"></p>
+<p>
+&nbsp;&nbsp;Pdrug value:&nbsp;&nbsp;
+<input type="text" name="output" size=19>&nbsp;&nbsp;
+</p>
+</form>
+</center>
+</TD>
+</TR>
+<TR>
+<TD>
+<center>
+<h4>Eq. 6 </h4>
+<br>
+<form name="calcer5">
+   <TABLE BORDER="0">
+<TR><TD>Aliphatic rings &nbsp;</TD><TD><input type="text" name="inputA" value="0" size=7><br></TD></TR>
+<TR><TD>log<em>P</em> &nbsp;</TD><TD><input type="text" name="inputB" value="0" size=7><br></TD></TR>
+<TR><TD>MW &nbsp;</TD><TD><input type="text" name="inputC" value="0" size=7><br></TD></TR>
+   </TABLE>
+<p><input type="button" value="Calculate" onClick="calcIt5()"></p>
+<p>
+&nbsp;&nbsp;Pdrug value:&nbsp;&nbsp;&nbsp;
+<input type="text" name="output" size=19>&nbsp;&nbsp;<br>
+</p>
+</form>
+</center>
+</TD>
+<TD>
+<center>
+<h4>Eq. 7 </h4>
+<br>
+<form name="calcer6">
+   <TABLE BORDER=0">
+<TR><TD>Aliphatic rings &nbsp;</TD><TD><input type="text" name="inputA" value="0" size=7><br></TD></TR>
+<TR><TD>PSA &nbsp;</TD><TD><input type="text" name="inputB" value="0" size=7><br></TD></TR>
+<TR><TD>Bonds &nbsp;</TD><TD><input type="text" name="inputC" value="0" size=7><br></TD></TR>
+   </TABLE>
+<p><input type="button" value="Calculate" onClick="calcIt6()"></p>
+
+<p>
+&nbsp;&nbsp;Pdrug value:&nbsp;&nbsp;
+<input type="text" name="output" size=19>&nbsp;&nbsp;<br>
+</p>
+</form>
+</center>
+</TD>
+<TD>
+<center>
+<h4>Eq. 8 </h4>
+<br>
+<form name="calcer7">
+  <TABLE BORDER="0">
+<TR><TD>log<em>P</em> &nbsp;</TD><TD><input type="text" name="inputA" value="0" size=7><br></TD></TR>
+<TR><TD>Wiener index &nbsp;</TD><TD><input type="text" name="inputB" value="0" size=7><br></TD></TR>
+<TR><TD>PSA &nbsp;</TD><TD><input type="text" name="inputC" value="0" size=7><br></TD></TR>
+   </TABLE>
+<p><input type="button" value="Calculate" onClick="calcIt7()"></p>
+
+<p>
+&nbsp;&nbsp;Pdrug value:&nbsp;&nbsp;
+<input type="text" name="output" size=19>&nbsp;&nbsp;<br>
+</p>
+</form>
+</center>
+</TD>
+</TR>
+</TR>
+<TD>
+<center>
+<h4>Eq. 9 </h4>
+<br>
+<form name="calcer8">
+   <TABLE BORDER="0">
+<TR><TD>Balaban index &nbsp;</TD><TD><input type="text" name="inputA" value="0" size=7><br></TD></TR>
+<TR><TD>Aromatic rings &nbsp;</TD><TD><input type="text" name="inputB" value="0" size=7><br></TD></TR>
+<TR><TD>Donors &nbsp;</TD><TD><input type="text" name="inputC" value="0" size=7><br></TD></TR>
+<TR><TD>&Delta;G &nbsp;</TD><TD><input type="text" name="inputD" value="0" size=7><br></TD></TR>
+<TR><TD>NHA &nbsp;</TD><TD><input type="text" name="inputE" value="0" size=7><br></TD></TR>
+   </TABLE>
+<p><input type="button" value="Calculate" onClick="calcIt8()"></p>
+
+<p>&nbsp;&nbsp;Pdrug value:&nbsp;&nbsp;
+<input type="text" name="output" size=19>&nbsp;&nbsp;<br>
+</p>
+</form>
+</TD>
+</center>
+<TD></TD>
+<TD>
+<center>
+<h4>Eq. 10 </h4>
+<br>
+<form name="calcer9">
+   <TABLE BORDER="0">
+<TR><TD>Aliphatic rings &nbsp;</TD><TD><input type="text" name="inputA" value="0" size=7><br></TD></TR>
+<TR><TD>log<em>P</em> &nbsp;</TD><TD><input type="text" name="inputB" value="0" size=7><br></TD></TR>
+<TR><TD>PSA &nbsp;</TD><TD><input type="text" name="inputC" value="0" size=7><br></TD></TR>
+<TR><TD>&Delta;G &nbsp;</TD><TD><input type="text" name="inputD" value="0" size=7><br></TD></TR>
+<TR><TD>Wiener index &nbsp;</TD><TD><input type="text" name="inputE" value="0" size=7><br></TD></TR>
+   </TABLE>
+
+<p><input type="button" value="Calculate" onClick="calcIt9()"></p>
+
+<p>&nbsp;&nbsp;Pdrug value:&nbsp;&nbsp;
+<input type="text" name="output" size=19></p>
+
+</form>
+</center>
+</TD>
+</TR>
+</TABLE>
+<br>
+<p>___________________</p>
+<br><br>
+
+<b>Functions to calculate the probability of classifying as a specific DC drug <em>vs.</em> drugs from other DCs.</b>
+<br>
+<br>
+
+<TABLE BORDER="1">
+<TR>
+<TD>
+<center>
+<h4>Eq. 14 </h4>
+&nbsp;&nbsp;Probability of drug belonging to DC8 <br>&nbsp;&nbsp;(Anti-Neoplastic agents) as opposed to other DCs.&nbsp;&nbsp;
+<br><br>
+<form name="calcer12">
+   <TABLE BORDER="0">
+<TR><TD>Number of Carbons &nbsp;</TD><TD><input type="text" name="inputA" value="0" size=7><br></TD></TR>
+<TR><TD>PSA &nbsp;</TD><TD><input type="text" name="inputB" value="0" size=7><br></TD></TR>
+<TR><TD>Molecular polarizability &nbsp;</TD><TD><input type="text" name="inputC" value="0" size=7><br></TD></TR>
+   </TABLE>
+<p><input type="button" value="Calculate" onClick="calcIt12()"></p>
+
+</p>&nbsp;&nbsp;PdrugDC8 value:&nbsp;&nbsp;
+<input type="text" name="output" size=19>&nbsp;&nbsp;<br></p>
+
+</form>
+</center>
+</TD>
+<TD>
+<center>
+<h4>Eq. 15 </h4>
+&nbsp;&nbsp;Probability of drug belonging to DC10 <br>&nbsp;&nbsp;(Nervous system) as opposed to other DCs.&nbsp;&nbsp;
+<br><br>
+<form name="calcer13">
+   <TABLE BORDER="0">
+<TR><TD>Aromatic rings &nbsp;</TD><TD><input type="text" name="inputA" value="0" size=7><br></TD></TR>
+<TR><TD>Aliphatic rings &nbsp;</TD><TD><input type="text" name="inputB" value="0" size=7><br></TD></TR>
+<TR><TD>Number of Carbons &nbsp;</TD><TD><input type="text" name="inputC" value="0" size=7><br></TD></TR>
+<TR><TD>PSA &nbsp;</TD><TD><input type="text" name="inputD" value="0" size=7><br></TD></TR>
+<TR><TD>&Delta;G &nbsp;</TD><TD><input type="text" name="inputE" value="0" size=7><br></TD></TR>
+<TR><TD>MSA &nbsp;</TD><TD><input type="text" name="inputF" value="0" size=7><br></TD></TR>
+  </TABLE>
+<p><input type="button" value="Calculate" onClick="calcIt13()"></p>
+
+<p>&nbsp;&nbsp;PdrugDC10 value:&nbsp;&nbsp;
+<input type="text" name="output" size=19></p>
+
+</form>
+</center>
+</TD>
+</TR>
+</TABLE>
+
+<br>
+<p>___________________</p>
+<br><br>
+
+<b>Functions to calculate the probability of classifying as a specific DC drug <em>vs.</em> non-drugs.</b>
+<br>
+<br>
+<TABLE BORDER="1">
+<TR>
+<TD>
+<center>
+<h4>Eq. 16 </h4>
+<br>
+&nbsp;&nbsp;Probability of drug belonging to DC1 <br>&nbsp;&nbsp;(Alimentary system and Immonomodulating) &nbsp;&nbsp;<br><em>vs.</em> non-drugs.&nbsp;&nbsp;
+<br><br>
+<form name="calcer14">
+   <TABLE BORDER="0">
+<TR><TD>Aromatic rings &nbsp;</TD><TD><input type="text" name="inputA" value="0" size=7><br></TD></TR>
+<TR><TD>PSA &nbsp;</TD><TD><input type="text" name="inputB" value="0" size=7><br></TD></TR>
+<TR><TD>&Delta;G &nbsp;</TD><TD><input type="text" name="inputC" value="0" size=7><br></TD></TR>
+<TR><TD>ApolarSA &nbsp;</TD><TD><input type="text" name="inputD" value="0" size=7><br></TD></TR>
+   </TABLE>
+<p><input type="button" value="Calculate" onClick="calcIt14()"></p>
+
+<p>&nbsp;&nbsp;PdrugDC1 value:&nbsp;&nbsp;
+<input type="text" name="output" size=19>&nbsp;&nbsp;<br></p>
+
+</form>
+</center></TD>
+<TD>
+<center>
+<h4>Eq. 17 </h4>
+<br>
+&nbsp;&nbsp;Probability of drug belonging to DC3 <br>&nbsp;&nbsp;(Cardiovascular system) <em>vs.</em> non-drugs.&nbsp;&nbsp;
+<br><br>
+<form name="calcer15">
+   <TABLE BORDER="0">
+<TR><TD>Balaban index &nbsp;</TD><TD><input type="text" name="inputA" value="0" size=7><br></TD></TR>
+<TR><TD>log<em>P</em> &nbsp;</TD><TD><input type="text" name="inputB" value="0" size=7><br></TD></TR>
+<TR><TD>MSA &nbsp;</TD><TD><input type="text" name="inputC" value="0" size=7><br></TD></TR>
+<TR><TD>Aromatic atoms &nbsp;</TD><TD><input type="text" name="inputD" value="0" size=7><br></TD></TR>
+   </TABLE>
+<p><input type="button" value="Calculate" onClick="calcIt15()"></p>
+
+<p>&nbsp;&nbsp;PdrugDC3 value:&nbsp;&nbsp;
+<input type="text" name="output" size=19>&nbsp;&nbsp;<br></p>
+
+</form>
+</center>
+</TD>
+<TD>
+<center>
+<h4>Eq. 18 </h4>
+<br>
+&nbsp;&nbsp;Probability of drug belonging to DC5 <br>&nbsp;&nbsp;(Genito-Urinary system) <em>vs.</em> non-drugs.&nbsp;&nbsp;
+<br><br>
+<form name="calcer16">
+   <TABLE BORDER="0">
+<TR><TD>Aromatic rings &nbsp;</TD><TD><input type="text" name="inputA" value="0" size=7><br></TD></TR>
+<TR><TD>PSA &nbsp;</TD><TD><input type="text" name="inputB" value="0" size=7><br></TD></TR>
+<TR><TD>Wiener polarity &nbsp;</TD><TD><input type="text" name="inputC" value="0" size=7><br></TD></TR>
+   </TABLE>
+<p><input type="button" value="Calculate" onClick="calcIt16()"></p>
+
+<p>&nbsp;&nbsp;PdrugDC5 value:&nbsp;&nbsp;
+<input type="text" name="output" size=19>&nbsp;&nbsp;<br></p>
+
+</form>
+</center>
+</TD>
+</TR>
+<TR>
+<TD>
+<center>
+<h4>Eq. 19 </h4>
+<br>
+&nbsp;&nbsp;Probability of drug belonging to DC7 <br>&nbsp;&nbsp;(Anti-Infectives) <em>vs.</em> non-drugs.&nbsp;&nbsp;
+<br><br>
+<form name="calcer17">
+     <TABLE BORDER="0">
+<TR><TD>Rings &nbsp;</TD><TD><input type="text" name="inputA" value="0" size=7><br></TD></TR>
+<TR><TD>Number of Carbons &nbsp;</TD><TD><input type="text" name="inputB" value="0" size=7><br></TD></TR>
+<TR><TD>PSA &nbsp;</TD><TD><input type="text" name="inputC" value="0" size=7><br></TD></TR>
+<TR><TD>Wiener polarity &nbsp;</TD><TD><input type="text" name="inputD" value="0" size=7><br></TD></TR>
+   </TABLE>
+<p><input type="button" value="Calculate" onClick="calcIt17()"></p>
+
+<p>&nbsp;&nbsp;PdrugDC7 value:&nbsp;&nbsp;
+<input type="text" name="output" size=19>&nbsp;&nbsp;</p>
+
+</form>
+</center>
+</TD>
+<TD>
+<center>
+<h4>Eq. 20 </h4>
+<br>
+&nbsp;&nbsp;Probability of drug belonging to DC10 &nbsp;&nbsp;<br>&nbsp;&nbsp;(Nervous system) <em>vs.</em> non-drugs.&nbsp;&nbsp;
+<br><br>
+<form name="calcer18">
+   <TABLE BORDER="0">
+<TR><TD>log<em>P</em> &nbsp;</TD><TD><input type="text" name="inputA" value="0" size=7><br></TD</TR>
+<TR><TD>PSA &nbsp;</TD><TD><input type="text" name="inputB" value="0" size=7><br></TD></TR>
+<TR><TD>ApolarSA &nbsp;</TD><TD><input type="text" name="inputC" value="0" size=7><br></TD></TR>
+<TR><TD>Donors &nbsp;</TD><TD><input type="text" name="inputD" value="0" size=7><br></TD></TR>
+   </TABLE>
+<p><input type="button" value="Calculate" onClick="calcIt18()"></p>
+
+<p>&nbsp;&nbsp;PdrugDC10 value:&nbsp;&nbsp;
+<input type="text" name="output" size=19>&nbsp;&nbsp;&nbsp;</p>
+
+</form>
+</TD>
+</center>
+<TD>
+<center>
+<h4>Eq. 21 </h4>
+<br>
+&nbsp;&nbsp;Probability of drug belonging to DC12 <br>&nbsp;&nbsp;(Respiratory system) <em>vs.</em> non-drugs.&nbsp;&nbsp;
+<br><br>
+<form name="calcer19">
+   <TABLE BORDER="0">
+<TR><TD>Aromatic rings &nbsp;</TD><TD><input type="text" name="inputA" value="0" size=7><br></TD></TR>
+<TR><TD>hyper Wiener index &nbsp;</TD><TD><input type="text" name="inputB" value="0" size=7><br></TR></TD>
+<TR><TD>&Delta;G &nbsp;</TD><TD><input type="text" name="inputC" value="0" size=7><br></TD></TR>
+<TR><TD>ApolarSA &nbsp;</TD><TD><input type="text" name="inputD" value="0" size=7><br></TD></TR>
+   </TABLE>
+<p><input type="button" value="Calculate" onClick="calcIt19()"></p>
+
+<p>&nbsp;&nbsp;PdrugDC12 value:&nbsp;&nbsp;
+<input type="text" name="output" size=19>&nbsp;&nbsp;</p>
+
+</form>
+</center>
+</TD>
+</TR>
+<TR>
+<TD>
+<center>
+<h4>Eq. 22 </h4>
+<br>
+&nbsp;&nbsp;Probability of drug belonging to DC13 <br>&nbsp;&nbsp;(Sensory system) <em>vs.</em> non-drugs.&nbsp;&nbsp;
+<br><br>
+<form name="calcer20">
+   <TABLE BORDER="0">
+<TR><TD>log<em>P</em> &nbsp;</TD><TD><input type="text" name="inputA" value="0" size=7><br></TD></TR>
+<TR><TD>PSA &nbsp;</TD><TD><input type="text" name="inputB" value="0" size=7><br></TD></TR>
+<TR><TD>&Delta;G &nbsp;</TD><TD><input type="text" name="inputC" value="0" size=7><br></TD></TR>
+<TR><TD>Number of Carbons &nbsp;</TD><TD><input type="text" name="inputD" value="0" size=7><br></TD></TR>
+   </TABLE>
+<p><input type="button" value="Calculate" onClick="calcIt20()"></p>
+
+<p>&nbsp;&nbsp;PdrugDC13 value:&nbsp;&nbsp;
+<input type="text" name="output" size=19>&nbsp;&nbsp;<br></p>
+
+</form>
+</center>
+</TD>
+<TD></TD>
+<TD>
+<center>
+<h4>Eq. 23 </h4>
+<br>
+&nbsp;&nbsp;Probability of drug belonging to DC14 <br>&nbsp;&nbsp;
+(Various drugs) <em>vs.</em> non-drugs.&nbsp;&nbsp;
+<br><br>
+<form name="calcer21">
+   <TABLE BORDER="0">
+<TR><TD>Donors &nbsp;</TD><TD><input type="text" name="inputA" value="0" size=7><br></TD></TR>
+<TR><TD>&Delta;G &nbsp;</TD><TD><input type="text" name="inputB" value="0" size=7><br></TD></TR>
+<TR><TD>ApolarSA &nbsp;</TD><TD><input type="text" name="inputC" value="0" size=7><br></TD></TR>
+   </TABLE>
+<p><input type="button" value="Calculate" onClick="calcIt21()"></p>
+
+<p>&nbsp;&nbsp;PdrugDC14 value:&nbsp;&nbsp;
+<input type="text" name="output" size=19>&nbsp;&nbsp;<br></p>
+
+</form>
+</center>
+</TD>
+</TR>
+</TABLE>
+
+<br>
+<p>___________________</p>
+<br><br>
+
+
+
+</center>
+
+Please cite:<br>
+Garcia-Sosa A.T.,*
+Oja M., Hetenyi C., Maran U.,
+"DrugLogit: Logistic Discrimination between Drugs and Non-drugs Including Disease-Specificity by Assigning Probabilities Based on Molecular Properties", <i>Journal of Chemical Information and Modeling</i>, 2012, Vol. 52, Iss. 8, 2165-2180. DOI: <a href="http://pubs.acs.org/doi/pdf/10.1021/ci200587h">http://dx.doi.org/10.1021/ci200587h </a>, <a href="http://pubs.acs.org/doi/pdf/10.1021/ci200587h"> [PDF]</a>.
+
+<br>
+
+<p style="font-size:85%">See <a href="publications.html">Publications</a>.</p>
+
+</align>
+</font>
+</div>
+<br>
+
+<hr>
+<h3><a href="research.html">Research</a></h3>
+<h3><a href="publications.html">Publications</a></h3>
+<h3><a href="videos.html">Videos</a></h3>
+<h3><a href="http://hermes.chem.ut.ee/~alfx/research.html#pea6">WaterScore online calculator</a></h3>
+<h3><a href="http://hermes.chem.ut.ee/~alfx/druglogit.html">DrugLogit online calculator</a></h3>
+<h3><a href="http://hermes.chem.ut.ee/~alfx/FEP_Charge_Corrections.html">FEP Charge Corrections</a></h3>
+
+<h3><a href="download.html">Download</a></h3>
+<h3><a href="index.html">Contact</a></h3>
+
+</font>
+<br><br><br>
+</p>
+
+
+</body>
+</html>
+
+
+
+
+
+
